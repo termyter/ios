@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
         rightBarButton.configuration = .plain()
         rightBarButton.configuration?.title = "Готово"
-        
+        //Кнопу щас исправлю
         rightBarButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
