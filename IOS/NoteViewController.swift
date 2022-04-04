@@ -1,6 +1,6 @@
 import UIKit
 
-final class NoteViewController: UIViewController, UITextViewDelegate {
+final class NoteViewController: UIViewController {
     @IBOutlet weak var headerText: UITextField!
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
