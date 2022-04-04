@@ -1,119 +1,30 @@
 import UIKit
 
-class ViewController: UIViewController {
-    private var rightBarButton = UIButton()
-    private var titleTextView = UITextView()
-    private var descTextView = UITextView()
-
-    private var isEditingMode = false
+class ViewController: UIViewController, UITextViewDelegate {
+    @IBOutlet weak var headerText: UITextField!
+    @IBOutlet weak var mainText: UITextView!
+    @IBOutlet weak var rightBarButton: UIBarButtonItem!
+    private var isEditingMode = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        setupTitleTextView()
-        setupTextView()
-        setupRightBarButton()
+        rightBarButton.target = self
+        mainText.becomeFirstResponder()
+        rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         }
 
-    private func setupRightBarButton() {
-        rightBarButton.configuration = .plain()
-        rightBarButton.configuration?.title = "Готово"
-        rightBarButton.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    private func setupTextView() {
-        descTextView.isUserInteractionEnabled = true
-        descTextView.becomeFirstResponder()
-        descTextView.translatesAutoresizingMaskIntoConstraints = false
-        descTextView.isUserInteractionEnabled = isEditingMode
-
-        descTextView.text = "Текст заметки"
-        descTextView.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-
-        view.addSubview(descTextView)
-        NSLayoutConstraint(
-                           item: descTextView,
-                           attribute: .leading,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .leading,
-                           multiplier: 1,
-                           constant: 0
-                           ).isActive = true
-        NSLayoutConstraint(
-                            item: descTextView,
-                            attribute: .trailingMargin,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .trailingMargin,
-                            multiplier: 1,
-                            constant: 0
-                            ).isActive = true
-        NSLayoutConstraint(
-                            item: descTextView,
-                            attribute: .top,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .topMargin,
-                            multiplier: 1,
-                            constant: 60
-                            ).isActive = true
-        NSLayoutConstraint(
-                            item: descTextView,
-                            attribute: .height,
-                            relatedBy: .equal,
-                            toItem: descTextView,
-                            attribute: .width,
-                            multiplier: 1,
-                            constant: 0
-                            ).isActive = true
-    }
-
-    private func setupTitleTextView() {
-        titleTextView.isUserInteractionEnabled = true
-        titleTextView.becomeFirstResponder()
-        titleTextView.translatesAutoresizingMaskIntoConstraints = false
-        titleTextView.isUserInteractionEnabled = isEditingMode
-
-        titleTextView.text = "Заголовок"
-        titleTextView.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-
-        view.addSubview(titleTextView)
-        NSLayoutConstraint(
-                            item: titleTextView,
-                            attribute: .leading,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .leading,
-                            multiplier: 1,
-                            constant: 0
-                            ).isActive = true
-        NSLayoutConstraint(
-                            item: titleTextView,
-                            attribute: .trailingMargin,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .trailingMargin,
-                            multiplier: 1,
-                            constant: 0
-                            ).isActive = true
-        NSLayoutConstraint(
-                            item: titleTextView,
-                            attribute: .top,
-                            relatedBy: .equal,
-                            toItem: view,
-                            attribute: .topMargin,
-                            multiplier: 1,
-                            constant: 10
-                            ).isActive = true
-        NSLayoutConstraint(
-                            item: titleTextView,
-                            attribute: .height,
-                            relatedBy: .equal,
-                            toItem: titleTextView,
-                            attribute: .width,
-                            multiplier: 1,
-                            constant: 0
-                            ).isActive = true
+    @objc private func didRightBarButtonTapped(_ sender: Any) {
+        isEditingMode = !isEditingMode
+        mainText.isUserInteractionEnabled = isEditingMode
+        headerText.isUserInteractionEnabled = isEditingMode
+        if isEditingMode {
+            rightBarButton.title = "Готово"
+            mainText.becomeFirstResponder()
+            headerText.becomeFirstResponder()
+        } else {
+            rightBarButton.title = "Изменить"
+            mainText.resignFirstResponder()
+            headerText.resignFirstResponder()
+        }
     }
 }
