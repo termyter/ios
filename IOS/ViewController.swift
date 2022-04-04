@@ -11,20 +11,14 @@ class ViewController: UIViewController, UITextViewDelegate {
         rightBarButton.target = self
         mainText.becomeFirstResponder()
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
-        }
+    }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         isEditingMode = !isEditingMode
-        mainText.isUserInteractionEnabled = isEditingMode
-        headerText.isUserInteractionEnabled = isEditingMode
         if isEditingMode {
-            rightBarButton.title = "Готово"
             mainText.becomeFirstResponder()
-            headerText.becomeFirstResponder()
         } else {
-            rightBarButton.title = "Изменить"
-            mainText.resignFirstResponder()
-            headerText.resignFirstResponder()
+            view.endEditing(true)
         }
     }
 }
