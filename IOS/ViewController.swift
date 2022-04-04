@@ -4,7 +4,6 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var headerText: UITextField!
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var rightBarButton: UIBarButtonItem!
-    private var isEditingMode = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,11 +13,6 @@ class ViewController: UIViewController, UITextViewDelegate {
     }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
-        isEditingMode = !isEditingMode
-        if isEditingMode {
-            mainText.becomeFirstResponder()
-        } else {
             view.endEditing(true)
         }
-    }
 }
