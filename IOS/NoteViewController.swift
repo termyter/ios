@@ -3,6 +3,7 @@ import UIKit
 final class NoteViewController: UIViewController {
     private var rightBarButton = UIBarButtonItem()
     private var headerText = UITextField()
+    private var datePicker = UIDatePicker()
     private var mainText = UITextView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,15 +11,27 @@ final class NoteViewController: UIViewController {
         navigationItem.title = "Заметка"
         setupRightBarButton()
         setupHeaderText()
+        setupDatePicker()
         setupMainText()
         mainText.becomeFirstResponder()
+    }
+    private func setupDatePicker() {
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.datePickerMode = .date
+
+        view.addSubview(datePicker)
+        datePicker.topAnchor.constraint(equalTo: headerText.bottomAnchor, constant: 0).isActive = true
+        datePicker.leadingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+            constant: 0
+            ).isActive = true
     }
 
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         view.addSubview(mainText)
-        mainText.topAnchor.constraint(equalTo: headerText.bottomAnchor, constant: 0).isActive = true
+        mainText.topAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 0).isActive = true
         mainText.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         mainText.leadingAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.leadingAnchor,

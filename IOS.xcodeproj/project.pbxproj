@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF381A7B27FCA98400C26BC4 /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF381A7A27FCA98400C26BC4 /* NoteModel.swift */; };
 		FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635827F62A32008FCD68 /* AppDelegate.swift */; };
 		FF5C635B27F62A32008FCD68 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */; };
 		FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635C27F62A32008FCD68 /* NoteViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF381A7A27FCA98400C26BC4 /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		FF5C635527F62A32008FCD68 /* IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5C635827F62A32008FCD68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				FF5C635827F62A32008FCD68 /* AppDelegate.swift */,
 				FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */,
 				FF5C635C27F62A32008FCD68 /* NoteViewController.swift */,
+				FF381A7A27FCA98400C26BC4 /* NoteModel.swift */,
 				FF5C636127F62A33008FCD68 /* Assets.xcassets */,
 				FF5C636327F62A33008FCD68 /* LaunchScreen.storyboard */,
 				FF5C636627F62A33008FCD68 /* Info.plist */,
@@ -157,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */,
+				FF381A7B27FCA98400C26BC4 /* NoteModel.swift in Sources */,
 				FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */,
 				FF5C635B27F62A32008FCD68 /* SceneDelegate.swift in Sources */,
 			);
