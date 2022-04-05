@@ -14,7 +14,6 @@ final class NoteViewController: UIViewController {
         setupRightBarButton()
         setupHeaderText()
         setupDateField()
-        //setupDatePicker()
         setupMainText()
         mainText.becomeFirstResponder()
     }
