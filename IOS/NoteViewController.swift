@@ -14,5 +14,5 @@ final class NoteViewController: UIViewController {
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
             view.endEditing(true)
-        }
+    }
 }
