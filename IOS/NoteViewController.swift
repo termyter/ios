@@ -21,7 +21,7 @@ struct Note {
         self.headerText = headerText
     }
 
-    mutating func setMainText(mainText: String) {
+    mutating func setMainText(mainText: String?) {
         self.mainText = mainText
     }
 
@@ -135,9 +135,14 @@ final class NoteViewController: UIViewController {
             setupAlert()
         }
     }
+
     func setupModel() {
         note.setHeaderText(headerText: headerText.text!)
-        note.setMainText(mainText: mainText.text)
+        if mainText.text == ""{
+            note.setMainText(mainText: nil)
+        } else {
+            note.setMainText(mainText: mainText.text)
+        }
         note.setDatePicker(datePicker: dateField.text!)
     }
 }
