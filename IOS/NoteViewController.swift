@@ -4,16 +4,29 @@ struct Note {
     private var headerText: String
     private var mainText: String?
     private var datePicker: String
-    private var isEmpty: Bool?
-
-    init(headerText: String, mainText: String?, datePicker: String) {
-        self.headerText = headerText
-        self.mainText = mainText
-        self.datePicker = datePicker
+    private var isEmpty: Bool {
+        if self.headerText == ""{
+            return true
+        }
+        return false
     }
 
-    func getIsEpty() -> Bool? {
-        return self.isEmpty
+    init() {
+        self.headerText = ""
+        self.mainText = nil
+        self.datePicker = ""
+    }
+
+    mutating func setHeaderText(headerText: String) {
+        self.headerText = headerText
+    }
+
+    mutating func setMainText(mainText: String) {
+        self.mainText = mainText
+    }
+
+    mutating func setDatePicker(datePicker: String) {
+        self.datePicker = datePicker
     }
 }
 
@@ -23,6 +36,8 @@ final class NoteViewController: UIViewController {
     private var datePicker = UIDatePicker()
     private var dateField = UITextField()
     private var mainText = UITextView()
+
+    lazy var note = Note()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +120,7 @@ final class NoteViewController: UIViewController {
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-    func setupAlert() {
+    private func setupAlert() {
         let alert = UIAlertController(title: "Внимание", message: "Не все поля заполнены", preferredStyle: .alert)
         let buttonAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
         alert.addAction(buttonAlert)
@@ -115,21 +130,19 @@ final class NoteViewController: UIViewController {
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         view.endEditing(true)
-        notNull()
-
-
-        let note = Note(headerText: headerText.text!, mainText: mainText.text, datePicker: dateField.text ?? "")
-        if note.getIsEpty() ?? false {
-            //print(note.getHeaderText())
+        setupModel()
+        if note.getIsEmpty() {
+            setupAlert()
         }
+    }
+    func setupModel() {
+        note.setHeaderText(headerText: headerText.text!)
+        note.setMainText(mainText: mainText.text)
+        note.setDatePicker(datePicker: dateField.text!)
     }
 }
 extension Note {
-    mutating func notNull() {
-        if self.headerText != "" && self.headerText != "" {
-            self.isEmpty = true
-        } else {
-            self.isEmpty = false
-        }
+    func getIsEmpty() -> Bool {
+        return self.isEmpty
     }
 }
