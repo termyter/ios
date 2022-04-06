@@ -1,5 +1,22 @@
 import UIKit
 
+struct Note {
+    private var headerText: String
+    private var mainText: String?
+    private var datePicker: String
+    private var isEmpty: Bool?
+
+    init(headerText: String, mainText: String?, datePicker: String) {
+        self.headerText = headerText
+        self.mainText = mainText
+        self.datePicker = datePicker
+    }
+
+    func getIsEpty() -> Bool? {
+        return self.isEmpty
+    }
+}
+
 final class NoteViewController: UIViewController {
     private var rightBarButton = UIBarButtonItem()
     private var headerText = UITextField()
@@ -88,8 +105,31 @@ final class NoteViewController: UIViewController {
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
+    func setupAlert() {
+        let alert = UIAlertController(title: "Внимание", message: "Не все поля заполнены", preferredStyle: .alert)
+        let buttonAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
+        alert.addAction(buttonAlert)
+
+        present(alert, animated: true, completion: nil)
+    }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         view.endEditing(true)
+        notNull()
+
+
+        let note = Note(headerText: headerText.text!, mainText: mainText.text, datePicker: dateField.text ?? "")
+        if note.getIsEpty() ?? false {
+            //print(note.getHeaderText())
+        }
+    }
+}
+extension Note {
+    mutating func notNull() {
+        if self.headerText != "" && self.headerText != "" {
+            self.isEmpty = true
+        } else {
+            self.isEmpty = false
+        }
     }
 }
