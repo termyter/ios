@@ -53,6 +53,7 @@ final class NoteViewController: UIViewController {
     private func setupDateField() {
         dateField.translatesAutoresizingMaskIntoConstraints = false
         dateField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+
         setupDatePicker()
         dateField.inputView = datePicker
         getDateFromPicker()
