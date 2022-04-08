@@ -37,9 +37,9 @@ final class NoteViewController: UIViewController {
         }
     }
     func setupModel() {
-        noteModel.setHeaderText(headerText: noteView.headerText.text!)
-        noteModel.setDatePicker(datePicker: noteView.dateField.text!)
-        noteModel.setMainText(mainText: noteView.headerText.text)
+        noteModel.setHeaderText(headerText: noteView.getHeaderText())
+        noteModel.setDatePicker(datePicker: noteView.getDataField())
+        noteModel.setMainText(mainText: noteView.getHeaderText())
     }
     private func setupAlert() {
         let alert = UIAlertController(title: "Внимание", message: "Не все поля заполнены", preferredStyle: .alert)
@@ -52,7 +52,7 @@ final class NoteViewController: UIViewController {
 
 extension NoteView {
     func isEmptyView() -> Bool {
-        if self.headerText.text == ""{
+        if self.getHeaderText() == ""{
             return true
         }
         return false

@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 class NoteView: UIView {
-    var headerText = UITextField()
-    var datePicker = UIDatePicker()
-    var dateField = UITextField()
-    var mainText = UITextView()
+    private var headerText = UITextField()
+    private var datePicker = UIDatePicker()
+    private var dateField = UITextField()
+    private var mainText = UITextView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +26,31 @@ class NoteView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func getHeaderText() -> String{
+        return self.headerText.text!
+    }
+
+    func getMainText() -> String{
+        return self.mainText.text
+    }
+    func getDataField() -> String{
+        return self.dateField.text!
+    }
+
+    func setDataField(dataField:String) {
+        self.dateField.text = dataField
+    }
+
+    func setMainText(mainText:String) {
+        self.mainText.text = mainText
+    }
+
+    func setHeaderText(headerText:String) {
+        self.headerText.text = headerText
+    }
+
+
 
     private func setupDateField() {
         dateField.translatesAutoresizingMaskIntoConstraints = false
