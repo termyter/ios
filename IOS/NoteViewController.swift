@@ -2,11 +2,11 @@ import UIKit
 
 final class NoteViewController: UIViewController {
     private let noteView = NoteView()
-    private var noteModel = NoteModel()
+    private var noteModel = NoteModel(headerText: "", datePicker: "" )
     private var rightBarButton = UIBarButtonItem()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .systemBackground
         navigationItem.title = "Заметка"
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,19 +29,22 @@ final class NoteViewController: UIViewController {
     }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
-        view.endEditing(true)
+        noteView.setupModel()
         if noteView.isEmptyView() {
-            setupAlert()
+            showAlert()
         } else {
+            view.endEditing(true)
             setupModel()
         }
     }
+
     func setupModel() {
-        noteModel.setHeaderText(headerText: noteView.getHeaderText())
-        noteModel.setDatePicker(datePicker: noteView.getDataField())
-        noteModel.setMainText(mainText: noteView.getHeaderText())
+        noteModel.headerText = noteView.model.headerText
+        noteModel.datePicker = noteView.model.datePicker
+        noteModel.mainText = noteView.model.mainText
     }
-    private func setupAlert() {
+
+    private func showAlert() {
         let alert = UIAlertController(title: "Внимание", message: "Не все поля заполнены", preferredStyle: .alert)
         let buttonAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
         alert.addAction(buttonAlert)
@@ -52,9 +55,6 @@ final class NoteViewController: UIViewController {
 
 extension NoteView {
     func isEmptyView() -> Bool {
-        if self.getHeaderText() == ""{
-            return true
-        }
-        return false
+        self.model.isEmpty
     }
 }

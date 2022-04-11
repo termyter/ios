@@ -13,10 +13,18 @@ class NoteView: UIView {
     private var datePicker = UIDatePicker()
     private var dateField = UITextField()
     private var mainText = UITextView()
+    private var formatter = DateFormatter()
+    var model: NoteModel = NoteModel(headerText: "", datePicker: "") {
+         willSet {
+                headerText.text = model.headerText
+                dateField.text = model.datePicker
+                mainText.text = model.mainText
+         }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = .systemBackground
         setupHeaderText()
         setupDateField()
         setupMainText()
@@ -27,47 +35,29 @@ class NoteView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func getHeaderText() -> String {
-        return self.headerText.text!
-    }
-
-    func getMainText() -> String {
-        return self.mainText.text
-    }
-    func getDataField() -> String {
-        return self.dateField.text!
-    }
-
-    func setDataField(dataField: String) {
-        self.dateField.text = dataField
-    }
-
-    func setMainText(mainText: String) {
-        self.mainText.text = mainText
-    }
-
-    func setHeaderText(headerText: String) {
-        self.headerText.text = headerText
-    }
-
     private func setupDateField() {
         dateField.translatesAutoresizingMaskIntoConstraints = false
         dateField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-
+        formatter.dateFormat = "Дата: dd MMMM yyyy"
         setupDatePicker()
+        updateDateField()
         dateField.inputView = datePicker
-        getDateFromPicker()
-        datePicker.addTarget(self, action: #selector(getDateFromPicker), for: .valueChanged)
+        datePicker.addTarget(self, action: #selector(updateDateField), for: .valueChanged)
+
+        if model.datePicker == "" {
+            dateField.text = formatter.string(from: datePicker.date)
+            updateDateField()
+        } else {
+            dateField.text = model.datePicker
+        }
 
         self.addSubview(dateField)
-        dateField.topAnchor.constraint(equalTo: headerText.bottomAnchor, constant: 0).isActive = true
+        dateField.topAnchor.constraint(equalTo: headerText.bottomAnchor).isActive = true
         dateField.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.leadingAnchor
         ).isActive = true
         dateField.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
     }
 
@@ -77,9 +67,7 @@ class NoteView: UIView {
         datePicker.preferredDatePickerStyle = .wheels
     }
 
-    @objc private func getDateFromPicker() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "Дата: dd MMMM yyyy"
+    @objc private func updateDateField() {
         dateField.text = formatter.string(from: datePicker.date)
     }
 
@@ -99,12 +87,18 @@ class NoteView: UIView {
         ).isActive = true
     }
 
+    func setupModel() {
+        self.model.headerText = headerText.text ?? ""
+        self.model.datePicker = dateField.text ?? ""
+        self.model.mainText = mainText.text
+    }
+
     private func setupHeaderText() {
         headerText.translatesAutoresizingMaskIntoConstraints = false
         headerText.placeholder = "Заметка"
         headerText.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         self.addSubview(headerText)
-        headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         headerText.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor,
             constant: 0
