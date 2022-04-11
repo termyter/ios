@@ -27,30 +27,28 @@ class NoteView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func getHeaderText() -> String{
+    func getHeaderText() -> String {
         return self.headerText.text!
     }
 
-    func getMainText() -> String{
+    func getMainText() -> String {
         return self.mainText.text
     }
-    func getDataField() -> String{
+    func getDataField() -> String {
         return self.dateField.text!
     }
 
-    func setDataField(dataField:String) {
+    func setDataField(dataField: String) {
         self.dateField.text = dataField
     }
 
-    func setMainText(mainText:String) {
+    func setMainText(mainText: String) {
         self.mainText.text = mainText
     }
 
-    func setHeaderText(headerText:String) {
+    func setHeaderText(headerText: String) {
         self.headerText.text = headerText
     }
-
-
 
     private func setupDateField() {
         dateField.translatesAutoresizingMaskIntoConstraints = false
