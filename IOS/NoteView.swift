@@ -13,11 +13,15 @@ class NoteView: UIView {
     private var datePicker = UIDatePicker()
     private var dateField = UITextField()
     private var mainText = UITextView()
-    private var formatter = DateFormatter()
-    var model: NoteModel = NoteModel(headerText: "", datePicker: "") {
-         willSet {
+    private var  formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "Дата: dd MMMM yyyy"
+        return formatter
+   }()
+    var model: NoteModel = NoteModel(headerText: "", date: "") {
+         didSet {
                 headerText.text = model.headerText
-                dateField.text = model.datePicker
+                dateField.text = model.date
                 mainText.text = model.mainText
          }
     }
@@ -38,20 +42,19 @@ class NoteView: UIView {
     private func setupDateField() {
         dateField.translatesAutoresizingMaskIntoConstraints = false
         dateField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        formatter.dateFormat = "Дата: dd MMMM yyyy"
         setupDatePicker()
         updateDateField()
         dateField.inputView = datePicker
         datePicker.addTarget(self, action: #selector(updateDateField), for: .valueChanged)
 
-        if model.datePicker == "" {
+        if model.date == "" {
             dateField.text = formatter.string(from: datePicker.date)
             updateDateField()
         } else {
-            dateField.text = model.datePicker
+            dateField.text = model.date
         }
 
-        self.addSubview(dateField)
+        addSubview(dateField)
         dateField.topAnchor.constraint(equalTo: headerText.bottomAnchor).isActive = true
         dateField.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor
@@ -74,7 +77,7 @@ class NoteView: UIView {
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        self.addSubview(mainText)
+        addSubview(mainText)
         mainText.topAnchor.constraint(equalTo: dateField.bottomAnchor, constant: 0).isActive = true
         mainText.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
         mainText.leadingAnchor.constraint(
@@ -89,7 +92,7 @@ class NoteView: UIView {
 
     func setupModel() {
         self.model.headerText = headerText.text ?? ""
-        self.model.datePicker = dateField.text ?? ""
+        self.model.date = dateField.text ?? ""
         self.model.mainText = mainText.text
     }
 
@@ -97,7 +100,7 @@ class NoteView: UIView {
         headerText.translatesAutoresizingMaskIntoConstraints = false
         headerText.placeholder = "Заметка"
         headerText.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        self.addSubview(headerText)
+        addSubview(headerText)
         headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         headerText.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor,

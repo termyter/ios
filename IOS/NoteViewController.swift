@@ -2,16 +2,18 @@ import UIKit
 
 final class NoteViewController: UIViewController {
     private let noteView = NoteView()
-    private var noteModel = NoteModel(headerText: "", datePicker: "" )
+    private var noteModel = NoteModel(headerText: "", date: "" )
     private var rightBarButton = UIBarButtonItem()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationItem.title = "Заметка"
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
-
         view.addSubview(noteView)
+        noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
+        noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
         noteView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         noteView.leadingAnchor.constraint(
             equalTo: view.leadingAnchor,
@@ -34,14 +36,8 @@ final class NoteViewController: UIViewController {
             showAlert()
         } else {
             view.endEditing(true)
-            setupModel()
+            noteView.setupModel()
         }
-    }
-
-    func setupModel() {
-        noteModel.headerText = noteView.model.headerText
-        noteModel.datePicker = noteView.model.datePicker
-        noteModel.mainText = noteView.model.mainText
     }
 
     private func showAlert() {
