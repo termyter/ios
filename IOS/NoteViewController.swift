@@ -14,13 +14,12 @@ final class NoteViewController: UIViewController {
         view.addSubview(noteView)
         noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
         noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
-        noteView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        noteView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         noteView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 0
+            equalTo: view.leadingAnchor
         ).isActive = true
-        noteView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        noteView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
     private func setupRightBarButton() {
@@ -31,12 +30,11 @@ final class NoteViewController: UIViewController {
     }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
-        noteView.setupModel()
+        noteView.updateModel()
         if noteView.isEmptyView() {
             showAlert()
         } else {
             view.endEditing(true)
-            noteView.setupModel()
         }
     }
 

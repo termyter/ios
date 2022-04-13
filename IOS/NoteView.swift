@@ -78,19 +78,17 @@ class NoteView: UIView {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         addSubview(mainText)
-        mainText.topAnchor.constraint(equalTo: dateField.bottomAnchor, constant: 0).isActive = true
-        mainText.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        mainText.topAnchor.constraint(equalTo: dateField.bottomAnchor).isActive = true
+        mainText.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.leadingAnchor
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
     }
 
-    func setupModel() {
+    func updateModel() {
         self.model.headerText = headerText.text ?? ""
         self.model.date = dateField.text ?? ""
         self.model.mainText = mainText.text
@@ -103,12 +101,10 @@ class NoteView: UIView {
         addSubview(headerText)
         headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         headerText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.leadingAnchor
         ).isActive = true
         headerText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-            constant: 0
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
     }
 }
