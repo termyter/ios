@@ -13,11 +13,11 @@ class NoteView: UIView {
     private var datePicker = UIDatePicker()
     private var dateField = UITextField()
     private var mainText = UITextView()
-    private var  formatter: DateFormatter = {
+    private var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "Дата: dd MMMM yyyy"
         return formatter
-   }()
+    }()
     var model: NoteModel = NoteModel(headerText: "", date: "") {
          didSet {
                 headerText.text = model.headerText
