@@ -19,11 +19,11 @@ class NoteView: UIView {
         return formatter
     }()
     var model: NoteModel = NoteModel(headerText: "", date: "") {
-         didSet {
-                headerText.text = model.headerText
-                dateField.text = model.date
-                mainText.text = model.mainText
-         }
+        didSet {
+            headerText.text = model.headerText
+            dateField.text = model.date
+            mainText.text = model.mainText
+        }
     }
 
     override init(frame: CGRect) {
