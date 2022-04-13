@@ -47,7 +47,7 @@ class NoteView: UIView {
         dateField.inputView = datePicker
         datePicker.addTarget(self, action: #selector(updateDateField), for: .valueChanged)
 
-        if model.date.isEmpty == true {
+        if model.date.isEmpty {
             dateField.text = formatter.string(from: datePicker.date)
             updateDateField()
         } else {
