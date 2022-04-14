@@ -15,10 +15,11 @@ class ElementList: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemBackground
+        backgroundColor = .systemBackground
         setupHeaderText()
         setupMainText()
         setupDate()
+        backgroundColor = .green
     }
 
     required init?(coder: NSCoder) {
@@ -31,13 +32,13 @@ class ElementList: UIView {
         headerText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         addSubview(headerText)
 
-        headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        headerText.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         headerText.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor,
             constant: 16
         ).isActive = true
         headerText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            equalTo: self.trailingAnchor, constant: 16
         ).isActive = true
     }
 
@@ -47,13 +48,13 @@ class ElementList: UIView {
         mainText.font = UIFont.systemFont(ofSize: 10, weight: .thin)
         addSubview(mainText)
 
-        mainText.topAnchor.constraint(equalTo: headerText.safeAreaLayoutGuide.bottomAnchor, constant: 4).isActive = true
+        mainText.topAnchor.constraint(equalTo: headerText.bottomAnchor, constant: 4).isActive = true
         mainText.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor,
             constant: 16
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 16
         ).isActive = true
     }
 
@@ -71,5 +72,6 @@ class ElementList: UIView {
         date.trailingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
+        date.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 }

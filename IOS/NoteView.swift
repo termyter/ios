@@ -10,18 +10,18 @@ import UIKit
 
 class NoteView: UIView {
     private var headerText = UITextField()
-    private var datePicker = UIDatePicker()
-    private var dateField = UITextField()
+    private var date = UILabel()
     private var mainText = UITextView()
     private var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "Дата: dd MMMM yyyy"
+        formatter.dateFormat = "MM.dd.yyyy  eeee h:mm"
         return formatter
     }()
+    private var time = NSDate()
     var model: NoteModel = NoteModel(headerText: "", date: "") {
         didSet {
             headerText.text = model.headerText
-            dateField.text = model.date
+            date.text = model.date
             mainText.text = model.mainText
         }
     }
@@ -29,8 +29,8 @@ class NoteView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .systemBackground
+        setupDate()
         setupHeaderText()
-        setupDateField()
         setupMainText()
         mainText.becomeFirstResponder()
     }
@@ -39,69 +39,57 @@ class NoteView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupDateField() {
-        dateField.translatesAutoresizingMaskIntoConstraints = false
-        dateField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        setupDatePicker()
-        updateDateField()
-        dateField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(updateDateField), for: .valueChanged)
-
+    private func setupDate() {
+        date.translatesAutoresizingMaskIntoConstraints = false
+        date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        date.textColor = .gray
+        date.textAlignment = .center
+        date.text = formatter.string(from: time as Date)
         if model.date.isEmpty {
-            dateField.text = formatter.string(from: datePicker.date)
-            updateDateField()
+            model.date = formatter.string(from: time as Date)
         } else {
-            dateField.text = model.date
+            date.text = model.date
         }
 
-        addSubview(dateField)
-        dateField.topAnchor.constraint(equalTo: headerText.bottomAnchor).isActive = true
-        dateField.leadingAnchor.constraint(
+        addSubview(date)
+        date.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        date.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor
         ).isActive = true
-        dateField.trailingAnchor.constraint(
+        date.trailingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
     }
 
-    private func setupDatePicker() {
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .wheels
-    }
-
-    @objc private func updateDateField() {
-        dateField.text = formatter.string(from: datePicker.date)
-    }
 
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         addSubview(mainText)
-        mainText.topAnchor.constraint(equalTo: dateField.bottomAnchor).isActive = true
+        mainText.topAnchor.constraint(equalTo: headerText.bottomAnchor).isActive = true
         mainText.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor
+            equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 20
         ).isActive = true
     }
 
     func updateModel() {
         self.model.headerText = headerText.text ?? ""
-        self.model.date = dateField.text ?? ""
+        self.model.date = date.text ?? ""
         self.model.mainText = mainText.text
     }
 
     private func setupHeaderText() {
         headerText.translatesAutoresizingMaskIntoConstraints = false
-        headerText.placeholder = "Заметка"
+        headerText.placeholder = "Введите название"
         headerText.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         addSubview(headerText)
-        headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        headerText.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 20).isActive = true
         headerText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor
+            equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         headerText.trailingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.trailingAnchor

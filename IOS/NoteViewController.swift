@@ -8,12 +8,10 @@ final class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = "Заметка"
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(noteView)
-        noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
-        noteView.model = NoteModel(headerText: "заметка", mainText: "текст", date: "wefs")
+        
         noteView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         noteView.leadingAnchor.constraint(
             equalTo: view.leadingAnchor
