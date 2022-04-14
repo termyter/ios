@@ -25,7 +25,7 @@ class ListViewController: UIViewController {
         setupRightBarButton()
         elementList3.backgroundColor = .yellow
         setupScrollView()
-        listView = [elementList, elementList1, elementList3,elementList4]
+        listView = [elementList, elementList1, elementList3, elementList4]
         setupStackView()
     }
 
@@ -39,8 +39,6 @@ class ListViewController: UIViewController {
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         self.navigationController?.pushViewController(elementList2, animated: true)
     }
-
-
 
     //    func stackView(stackView: UIStackView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     //
@@ -70,7 +68,6 @@ class ListViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 4
-        //stackView.alignment = .firstBaseline
 
         view.addSubview(stackView)
 
