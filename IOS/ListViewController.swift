@@ -8,46 +8,82 @@ import UIKit
 
 class ListViewController: UIViewController {
     private let elementList = ElementList()
-    private var elementList1 = ElementList()
-    private let elementList3 = ElementList()
-    private let elementList4 = ElementList()
-    private let elementList2 = NoteViewController()
+    
+    
+    //private let newNote = NoteViewController()
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
-
+    private let addButton = UIButton()
+    let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    
     var listView = Array(arrayLiteral: UIView())
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(red: 229, green: 229, blue: 229, alpha: 1)
         navigationItem.title = "Заметки"
         setupRightBarButton()
-        elementList3.backgroundColor = .yellow
+        //setupAddButton()
         setupScrollView()
-        listView = [elementList, elementList1, elementList3, elementList4]
+        listView = [UIView()]
         setupStackView()
     }
-
+    
     private func setupRightBarButton() {
         rightBarButton.title = "Готово"
         rightBarButton.target = self
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-
-    @objc private func didRightBarButtonTapped(_ sender: Any) {
-        self.navigationController?.pushViewController(elementList2, animated: true)
+    private func setupAddButton() {
+        addButton.layer.cornerRadius = 25
+        addButton.clipsToBounds = true
+        addButton.contentVerticalAlignment = .bottom
+        addButton.setTitle("+", for: .normal)
+        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .regular)
+        addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
+        //addButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        view.addSubview(addButton)
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 734).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 321).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 19).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 69).isActive = true
     }
 
-    //    func stackView(stackView: UIStackView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    //
-    //        let cell = stackView.cell as NoteViewController
-    //    }
+    @objc private func didRightBarButtonTapped(_ sender: Any) {
+        let newNote = NoteViewController()
+        let element = ElementList()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        element.addGestureRecognizer(tap)
+       // element.isUserInteractionEnabled = true
+        //element.addGestureRecognizer(self.tap)
+        //element.isUserInteractionEnabled = true
+        newNote.completion = { noteTitle, note, date in
+            //self.navigationController?.popToRootViewController(animated: true)
+            element.setVal(header: noteTitle, main: note, date: date)
+            //element.addGestureRecognizer(self.tap)
+            print(element.date)
+            self.listView.append(element)
+            self.setupStackView()
+        }
+        self.navigationController?.pushViewController(newNote, animated: true)
+    }
+
+//        func stackView(stackView: UIStackView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//
+//            let cell = stackView.cell as NoteViewController
+//        }
+//    @objc func taplement(_ sender: UITapGestureRecognizer) {
+//        //self.navigationController?.pushViewController(newNote, animated: true)
+//        print("HelloWorld")
+//    }
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        print("Hello World")
+    }
 
     private func setupScrollView() {
-
-
         view.addSubview(scrollView)
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,19 +104,21 @@ class ListViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 4
-
-        view.addSubview(stackView)
+        scrollView.addSubview(stackView)
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-
-
-
+    }
+}
+extension UIView {
+    func addTapGesture(tapNumber: Int, target: Any, action: Selector) {
+        let tap = UITapGestureRecognizer(target: target, action: action)
+        tap.numberOfTapsRequired = tapNumber
+        addGestureRecognizer(tap)
+        isUserInteractionEnabled = true
     }
 }

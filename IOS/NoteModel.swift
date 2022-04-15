@@ -9,7 +9,7 @@ import Foundation
 
 struct NoteModel {
     var headerText: String
-    var mainText: String?
+    var mainText: String
     var date: String
     var isEmpty: Bool {
         return self.headerText.isEmpty

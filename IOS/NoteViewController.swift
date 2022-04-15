@@ -1,17 +1,19 @@
 import UIKit
 
 final class NoteViewController: UIViewController {
-    private let noteView = NoteView()
-    private var noteModel = NoteModel(headerText: "", date: "" )
+    let noteView = NoteView()
+    private var noteModel = NoteModel(headerText: "", mainText: "", date: "" )
     private var rightBarButton = UIBarButtonItem()
+    public var completion: ((String, String, String) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.restorationIdentifier = "NoteViewController"
         view.backgroundColor = .systemBackground
+        navigationItem.title = "Заметка"
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(noteView)
-        
         noteView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         noteView.leadingAnchor.constraint(
             equalTo: view.leadingAnchor
@@ -32,6 +34,7 @@ final class NoteViewController: UIViewController {
         if noteView.isEmptyView() {
             showAlert()
         } else {
+            completion?(self.noteView.model.headerText, self.noteView.model.mainText, self.noteView.model.date)
             view.endEditing(true)
         }
     }

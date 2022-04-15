@@ -18,7 +18,7 @@ class NoteView: UIView {
         return formatter
     }()
     private var time = NSDate()
-    var model: NoteModel = NoteModel(headerText: "", date: "") {
+    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
         didSet {
             headerText.text = model.headerText
             date.text = model.date
@@ -61,7 +61,6 @@ class NoteView: UIView {
         ).isActive = true
     }
 
-
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -79,7 +78,8 @@ class NoteView: UIView {
     func updateModel() {
         self.model.headerText = headerText.text ?? ""
         self.model.date = date.text ?? ""
-        self.model.mainText = mainText.text
+        print(mainText.text!)
+        self.model.mainText = mainText.text ?? ""
     }
 
     private func setupHeaderText() {
