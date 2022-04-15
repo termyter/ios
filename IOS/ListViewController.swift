@@ -40,13 +40,15 @@ class ListViewController: UIViewController {
         addButton.setTitle("+", for: .normal)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .regular)
         addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
-        //addButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(didRightBarButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 734).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 321).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 19).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 69).isActive = true
+        addButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 539).isActive = true
+        addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 301).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -19).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+
     }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
@@ -63,8 +65,8 @@ class ListViewController: UIViewController {
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        elementList.didTapCompletion()
-
+        //element.didTapCompletion()
+        //sender.self
     }
 
     private func setupScrollView() {
