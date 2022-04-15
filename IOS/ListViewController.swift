@@ -54,7 +54,7 @@ class ListViewController: UIViewController {
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         let newNote = NoteViewController()
         let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         element.addGestureRecognizer(tap)
         newNote.completion = {[weak self] noteModel in
             element.model = noteModel
@@ -65,6 +65,20 @@ class ListViewController: UIViewController {
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        if let item = sender.view as? ElementList {
+            print(item.model)
+            let newNote = NoteViewController()
+            newNote.noteView.model = item.model
+            newNote.completion = {[weak self] noteModel in
+                item.model = noteModel
+                self?.setupStackView()
+            }
+            
+            self.navigationController?.pushViewController(newNote, animated: true)
+        }
+        else {
+            print("не ElementList") }
+
         //element.didTapCompletion()
         //sender.self
     }
