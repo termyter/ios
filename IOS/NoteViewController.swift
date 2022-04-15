@@ -4,7 +4,7 @@ final class NoteViewController: UIViewController {
     let noteView = NoteView()
     private var noteModel = NoteModel(headerText: "", mainText: "", date: "" )
     private var rightBarButton = UIBarButtonItem()
-    public var completion: ((String, String, String) -> Void)?
+    public var completion: ((NoteModel) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ final class NoteViewController: UIViewController {
         if noteView.isEmptyView() {
             showAlert()
         } else {
-            completion?(self.noteView.model.headerText, self.noteView.model.mainText, self.noteView.model.date)
+            completion?(self.noteView.model)
             view.endEditing(true)
         }
     }

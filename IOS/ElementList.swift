@@ -12,6 +12,15 @@ class ElementList: UIView {
     var headerText = UILabel()
     var mainText = UILabel()
     var date = UILabel()
+    public var completion: ((NoteModel) -> Void)?
+    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
+        didSet {
+            headerText.text = model.headerText
+            date.text = model.date
+            mainText.text = model.mainText
+        }
+    }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,15 +29,17 @@ class ElementList: UIView {
         setupMainText()
         setupDate()
     }
+    func didTapCompletion() {
+        //let newNote = NoteViewController()
+        completion?(self.model)
+        //self.navigationController?.pushViewController(newNote, animated: true)
+        print("123")
+        print(self.headerText.text)
+
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    func setVal(header:String,main:String,date:String){
-        self.headerText.text = header
-        self.mainText.text = main
-        self.date.text = date
-        
     }
     
     private func setupHeaderText() {

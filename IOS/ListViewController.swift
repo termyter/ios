@@ -7,20 +7,21 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    private let elementList = ElementList()
+    //private let elementList = ElementList()
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
-    let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    //let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
     var listView = Array(arrayLiteral: UIView())
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 229, green: 229, blue: 229, alpha: 1)
         navigationItem.title = "Заметки"
         setupRightBarButton()
-        //setupAddButton()
+        setupAddButton()
         setupScrollView()
         listView = [UIView()]
         setupStackView()
@@ -43,7 +44,7 @@ class ListViewController: UIViewController {
         view.addSubview(addButton)
         addButton.translatesAutoresizingMaskIntoConstraints = false
         stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 734).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 321).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 321).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 19).isActive = true
         stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 69).isActive = true
     }
@@ -51,18 +52,19 @@ class ListViewController: UIViewController {
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         let newNote = NoteViewController()
         let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         element.addGestureRecognizer(tap)
-        newNote.completion = { noteTitle, note, date in
-            element.setVal(header: noteTitle, main: note, date: date)
-            self.listView.append(element)
-            self.setupStackView()
+        newNote.completion = {[weak self] noteModel in
+            element.model = noteModel
+            self?.listView.append(element)
+            self?.setupStackView()
         }
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        print("Hello World")
+        elementList.didTapCompletion()
+
     }
 
     private func setupScrollView() {
