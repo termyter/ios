@@ -8,17 +8,13 @@ import UIKit
 
 class ListViewController: UIViewController {
     private let elementList = ElementList()
-    
-    
-    //private let newNote = NoteViewController()
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-    
     var listView = Array(arrayLiteral: UIView())
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 229, green: 229, blue: 229, alpha: 1)
@@ -57,28 +53,14 @@ class ListViewController: UIViewController {
         let element = ElementList()
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
         element.addGestureRecognizer(tap)
-       // element.isUserInteractionEnabled = true
-        //element.addGestureRecognizer(self.tap)
-        //element.isUserInteractionEnabled = true
         newNote.completion = { noteTitle, note, date in
-            //self.navigationController?.popToRootViewController(animated: true)
             element.setVal(header: noteTitle, main: note, date: date)
-            //element.addGestureRecognizer(self.tap)
-            print(element.date)
             self.listView.append(element)
             self.setupStackView()
         }
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
-//        func stackView(stackView: UIStackView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//
-//            let cell = stackView.cell as NoteViewController
-//        }
-//    @objc func taplement(_ sender: UITapGestureRecognizer) {
-//        //self.navigationController?.pushViewController(newNote, animated: true)
-//        print("HelloWorld")
-//    }
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         print("Hello World")
     }
