@@ -11,6 +11,20 @@ final class NoteViewController: UIViewController {
         self.restorationIdentifier = "NoteViewController"
         view.backgroundColor = .systemBackground
         navigationItem.title = "Заметка"
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(
+                                       self,
+                                       selector: #selector(adjustForKeyboard),
+                                       name: UIResponder.keyboardWillHideNotification,
+                                       object: nil
+                                      )
+        notificationCenter.addObserver(
+                                        self,
+                                        selector: #selector(adjustForKeyboard),
+                                        name: UIResponder.keyboardWillChangeFrameNotification,
+                                        object: nil
+                                       )
+
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(noteView)
@@ -22,6 +36,19 @@ final class NoteViewController: UIViewController {
         noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            setupRightBarButton()
+        } else {
+            self.navigationItem.setRightBarButton(nil, animated: true)
+        }
+    }
     private func setupRightBarButton() {
         rightBarButton.title = "Готово"
         rightBarButton.target = self
