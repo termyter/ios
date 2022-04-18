@@ -8,7 +8,6 @@ final class NoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.restorationIdentifier = "NoteViewController"
         view.backgroundColor = .systemBackground
         navigationItem.title = "Заметка"
         let notificationCenter = NotificationCenter.default
@@ -37,12 +36,6 @@ final class NoteViewController: UIViewController {
     }
 
     @objc func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
-                as? NSValue else { return }
-
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
-
         if notification.name == UIResponder.keyboardWillHideNotification {
             setupRightBarButton()
         } else {
@@ -62,7 +55,6 @@ final class NoteViewController: UIViewController {
             showAlert()
         } else {
             completion?(self.noteView.model)
-            rightBarButton.accessibilityElementsHidden = true
             view.endEditing(true)
         }
     }

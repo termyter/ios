@@ -15,7 +15,7 @@ class NoteView: UIView {
     private var mainText = UITextView()
     private var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM.dd.yyyy  eeee h:mm"
+        formatter.dateFormat = "MM.dd.yyyy  eeee HH:mm"
         return formatter
     }()
     private var time = NSDate()
@@ -82,13 +82,7 @@ class NoteView: UIView {
         date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         date.textColor = .gray
         date.textAlignment = .center
-        date.text = formatter.string(from: time as Date)
-        if model.date.isEmpty {
-            model.date = formatter.string(from: time as Date)
-        } else {
-            date.text = model.date
-        }
-
+        model.date = formatter.string(from: time as Date)
         scrollView.addSubview(date)
         date.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         date.leadingAnchor.constraint(
@@ -116,6 +110,7 @@ class NoteView: UIView {
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+
         scrollView.addSubview(mainText)
         mainText.topAnchor.constraint(equalTo: headerText.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -123,17 +118,15 @@ class NoteView: UIView {
             equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: 20
+            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
     }
 
     func updateModel() {
-        mainText.text = "123"
-
-        self.model.headerText = headerText.text ?? ""
-        self.model.mainText = mainText.text ?? "123"
-        self.model.date = date.text ?? ""
-        self.model.mainText = mainText.text ?? "123"
+        //model.mainText = mainText.text ?? "123"
+        model.headerText = headerText.text ?? ""
+        model.mainText = mainText.text ?? "123"
+        model.date = date.text ?? ""
     }
 
     private func setupHeaderText() {
@@ -146,10 +139,7 @@ class NoteView: UIView {
             equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         headerText.trailingAnchor.constraint(
-            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: 20
-        ).isActive = true
-        headerText.widthAnchor.constraint(
-            equalTo: scrollView.safeAreaLayoutGuide.heightAnchor
+            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
     }
 }

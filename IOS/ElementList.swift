@@ -34,7 +34,7 @@ class ElementList: UIView {
             constant: 16
         ).isActive = true
         trailingAnchor.constraint(
-            equalTo: self.trailingAnchor, constant: 16
+            equalTo: self.trailingAnchor, constant: -16
         ).isActive = true
     }
 
@@ -57,7 +57,7 @@ class ElementList: UIView {
             constant: 16
         ).isActive = true
         headerText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 16
+            equalTo: trailingAnchor, constant: -16
         ).isActive = true
     }
 
@@ -72,7 +72,7 @@ class ElementList: UIView {
             constant: 16
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: 16
+            equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16
         ).isActive = true
     }
 
