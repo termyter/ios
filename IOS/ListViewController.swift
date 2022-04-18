@@ -11,7 +11,6 @@ class ListViewController: UIViewController {
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
-    var listView = [UIView()]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,9 +18,8 @@ class ListViewController: UIViewController {
         navigationItem.title = "Заметки"
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupScrollView()
-        setupAddButton()
-        listView = [UIView()]
         setupStackView()
+        setupAddButton()
     }
 
     private func setupAddButton() {
@@ -41,8 +39,7 @@ class ListViewController: UIViewController {
         element.addGestureRecognizer(tap)
         newNote.completion = {[weak self] noteModel in
             element.model = noteModel
-            self?.listView.append(element)
-            self?.setupStackView()
+            self?.stackView.addArrangedSubview(element)
         }
         self.navigationController?.pushViewController(newNote, animated: true)
     }
@@ -78,7 +75,6 @@ class ListViewController: UIViewController {
     }
 
     private func setupStackView() {
-        stackView = UIStackView(arrangedSubviews: listView)
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.spacing = 4
