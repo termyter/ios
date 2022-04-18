@@ -7,33 +7,25 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    //private let elementList = ElementList()
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
-    //let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-    var listView = Array(arrayLiteral: UIView())
-    
+    var listView = [UIView()]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 229, green: 229, blue: 229, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         navigationItem.title = "Заметки"
-        setupRightBarButton()
-        setupAddButton()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupScrollView()
+        setupAddButton()
         listView = [UIView()]
         setupStackView()
     }
-    
-    private func setupRightBarButton() {
-        rightBarButton.title = "Готово"
-        rightBarButton.target = self
-        rightBarButton.action = #selector(didRightBarButtonTapped(_:))
-        navigationItem.rightBarButtonItem = rightBarButton
-    }
+
     private func setupAddButton() {
+        addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.layer.cornerRadius = 25
         addButton.clipsToBounds = true
         addButton.contentVerticalAlignment = .bottom
@@ -42,13 +34,10 @@ class ListViewController: UIViewController {
         addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
         addButton.addTarget(self, action: #selector(didRightBarButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(addButton)
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 539).isActive = true
-        addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 301).isActive = true
-        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -19).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
-
+        addButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 600).isActive = true
+        addButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 301).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
     }
 
     @objc private func didRightBarButtonTapped(_ sender: Any) {
@@ -69,18 +58,13 @@ class ListViewController: UIViewController {
             print(item.model)
             let newNote = NoteViewController()
             newNote.noteView.model = item.model
-            newNote.completion = {[weak self] noteModel in
+            newNote.completion = { [weak self] noteModel in
                 item.model = noteModel
                 self?.setupStackView()
             }
-            
             self.navigationController?.pushViewController(newNote, animated: true)
-        }
-        else {
+        } else {
             print("не ElementList") }
-
-        //element.didTapCompletion()
-        //sender.self
     }
 
     private func setupScrollView() {

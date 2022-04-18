@@ -35,6 +35,7 @@ final class NoteViewController: UIViewController {
             showAlert()
         } else {
             completion?(self.noteView.model)
+            rightBarButton.accessibilityElementsHidden = true
             view.endEditing(true)
         }
     }
