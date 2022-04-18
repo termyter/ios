@@ -26,16 +26,10 @@ class ListViewController: UIViewController {
 
     private func setupAddButton() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.layer.cornerRadius = 25
-        addButton.clipsToBounds = true
-        addButton.contentVerticalAlignment = .bottom
-        addButton.setTitle("+", for: .normal)
-        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .regular)
-        addButton.backgroundColor = UIColor(red: 0, green: 0.478, blue: 1, alpha: 1)
+        addButton.setImage(UIImage(named: "button"), for: .normal)
         addButton.addTarget(self, action: #selector(didRightBarButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(addButton)
-        addButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 600).isActive = true
-        addButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 301).isActive = true
+
         addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
         addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
     }
