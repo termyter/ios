@@ -123,10 +123,7 @@ class NoteView: UIView {
     }
 
     func updateModel() {
-        //model.mainText = mainText.text ?? "123"
-        model.headerText = headerText.text ?? ""
-        model.mainText = mainText.text ?? "123"
-        model.date = date.text ?? ""
+        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
     }
 
     private func setupHeaderText() {

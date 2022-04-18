@@ -23,7 +23,7 @@ class ElementList: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .gray
+        backgroundColor = .systemBackground
         setupHeaderText()
         setupMainText()
         setupDate()
