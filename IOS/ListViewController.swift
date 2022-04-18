@@ -85,6 +85,8 @@ class ListViewController: UIViewController {
         scrollView.addSubview(stackView)
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 10, trailing: 16)
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true

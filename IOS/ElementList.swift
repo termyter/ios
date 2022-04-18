@@ -27,14 +27,15 @@ class ElementList: UIView {
         setupHeaderText()
         setupMainText()
         setupDate()
+        layer.cornerRadius = 10
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: topAnchor).isActive = true
         leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor,
+            equalTo: leadingAnchor,
             constant: 16
         ).isActive = true
         trailingAnchor.constraint(
-            equalTo: self.trailingAnchor, constant: -16
+            equalTo: trailingAnchor, constant: -16
         ).isActive = true
     }
 
