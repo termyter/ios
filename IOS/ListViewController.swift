@@ -6,11 +6,11 @@
 //
 import UIKit
 
-protocol ListViewControlleDelegate: AnyObject {
+protocol ListDelegate: AnyObject {
     func update(noteModel: NoteModel)
 }
 
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, ListDelegate {
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
@@ -39,13 +39,12 @@ class ListViewController: UIViewController {
 
     @objc private func didAddButtonTap(_ sender: Any) {
         let newNote = NoteViewController()
-        newNote.listViewControlleDelegate = self
+        newNote.listDelegate = self
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
     @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
         if let item = sender.view as? ElementList {
-            print(item.model)
             let newNote = NoteViewController()
             newNote.noteView.model = item.model
             newNote.completion = { [weak self] noteModel in
@@ -55,6 +54,13 @@ class ListViewController: UIViewController {
             self.navigationController?.pushViewController(newNote, animated: true)
         } else {
             print("не ElementList") }
+    }
+    func update(noteModel: NoteModel) {
+        let element = ElementList()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
+        element.addGestureRecognizer(tap)
+        element.model = noteModel
+        stackView.addArrangedSubview(element)
     }
 
     private func setupScrollView() {
@@ -95,15 +101,5 @@ extension UIView {
         tap.numberOfTapsRequired = tapNumber
         addGestureRecognizer(tap)
         isUserInteractionEnabled = true
-    }
-}
-
-extension ListViewController: ListViewControlleDelegate {
-    func update(noteModel: NoteModel) {
-        let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
-        element.addGestureRecognizer(tap)
-        element.model = noteModel
-        stackView.addArrangedSubview(element)
     }
 }

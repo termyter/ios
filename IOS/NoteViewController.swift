@@ -1,8 +1,12 @@
 import UIKit
 
-final class NoteViewController: UIViewController {
+protocol NoteDelegate: AnyObject {
+    func update(noteModel: NoteModel)
+}
+
+final class NoteViewController: UIViewController, NoteDelegate {
     let noteView = NoteView()
-    weak var listViewControlleDelegate: ListViewControlleDelegate?
+    weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
     public var completion: ((NoteModel) -> Void)?
 
@@ -23,6 +27,7 @@ final class NoteViewController: UIViewController {
                                         name: UIResponder.keyboardWillChangeFrameNotification,
                                         object: nil
                                        )
+        noteView.noteDelegate = self
 
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,13 +40,15 @@ final class NoteViewController: UIViewController {
         noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
+    func update(noteModel: NoteModel) {
+        updateListView()
+    }
+
     @objc func adjustForKeyboard(notification: Notification) {
         if notification.name == UIResponder.keyboardWillHideNotification {
             setupRightBarButton()
-//            updateListView()
         } else {
             self.navigationItem.setRightBarButton(nil, animated: true)
-            //updateListView()
         }
     }
     private func setupRightBarButton() {
@@ -52,16 +59,21 @@ final class NoteViewController: UIViewController {
     }
     func updateListView() {
         noteView.updateModel()
-        listViewControlleDelegate?.update(noteModel: self.noteView.model)
+        completion?(self.noteView.model)
     }
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         noteView.updateModel()
         if noteView.isEmptyView() {
             showAlert()
         } else {
-            listViewControlleDelegate?.update(noteModel: self.noteView.model)
+            listDelegate?.update(noteModel: self.noteView.model)
+            completion?(self.noteView.model)
             view.endEditing(true)
         }
+    }
+
+    func update() {
+        updateListView()
     }
 
     private func showAlert() {
@@ -74,13 +86,6 @@ final class NoteViewController: UIViewController {
 }
 
 extension NoteView {
-
-        func textViewDidChange(_ textView: UITextView) { //Handle the text changes here
-            model.mainText = textView.text //the textView parameter is the textView where text was changed
-            print(model.mainText)
-        }
-
-    
     func isEmptyView() -> Bool {
         self.model.isEmpty
     }

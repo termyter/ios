@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-class NoteView: UIView, UITextViewDelegate {
+class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
+    weak var noteDelegate: NoteDelegate?
     private var headerText = UITextField()
     private var scrollView = UIScrollView()
     private var date = UILabel()
@@ -110,9 +111,8 @@ class NoteView: UIView, UITextViewDelegate {
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-//        mainText.addTarget(self, action: #selector(ListViewController.update(noteModel:)), forControlEvents: UIControlEvents.EditingChanged)
         mainText.delegate = self
-        
+
         scrollView.addSubview(mainText)
         mainText.topAnchor.constraint(equalTo: headerText.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -123,10 +123,10 @@ class NoteView: UIView, UITextViewDelegate {
             equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
     }
-//    func textViewDidChange(_ textView: UITextView) { //Handle the text changes here
-//        model.mainText = textView.text //the textView parameter is the textView where text was changed
-//        print(model.mainText)
-//    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        noteDelegate?.update(noteModel: model)
+    }
 
     func updateModel() {
         model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
@@ -136,6 +136,7 @@ class NoteView: UIView, UITextViewDelegate {
         headerText.translatesAutoresizingMaskIntoConstraints = false
         headerText.placeholder = "Введите название"
         headerText.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        headerText.addTarget(self, action: #selector(textViewDidChange), for: UIControl.Event.editingChanged)
         scrollView.addSubview(headerText)
         headerText.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 20).isActive = true
         headerText.leadingAnchor.constraint(
