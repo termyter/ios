@@ -2,7 +2,7 @@ import UIKit
 
 final class NoteViewController: UIViewController {
     let noteView = NoteView()
-    private var noteModel = NoteModel(headerText: "", mainText: "", date: "" )
+    //private var noteModel = NoteModel(headerText: "", mainText: "", date: "" )
     private var rightBarButton = UIBarButtonItem()
     public var completion: ((NoteModel) -> Void)?
 

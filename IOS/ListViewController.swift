@@ -25,26 +25,26 @@ class ListViewController: UIViewController {
     private func setupAddButton() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.setImage(UIImage(named: "button"), for: .normal)
-        addButton.addTarget(self, action: #selector(didRightBarButtonTapped(_:)), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
         view.addSubview(addButton)
 
         addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
         addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
     }
 
-    @objc private func didRightBarButtonTapped(_ sender: Any) {
+    @objc private func didAddButtonTap(_ sender: Any) {
         let newNote = NoteViewController()
         let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
         element.addGestureRecognizer(tap)
-        newNote.completion = {[weak self] noteModel in
+        newNote.completion = { [weak self] noteModel in
             element.model = noteModel
             self?.stackView.addArrangedSubview(element)
         }
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
         if let item = sender.view as? ElementList {
             print(item.model)
             let newNote = NoteViewController()

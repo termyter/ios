@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 class ElementList: UIView {
-    var headerText = UILabel()
-    var mainText = UILabel()
-    var date = UILabel()
-    public var completion: ((NoteModel) -> Void)?
+    var completion: ((NoteModel) -> Void)?
+    private var headerText = UILabel()
+    private var mainText = UILabel()
+    private var date = UILabel()
     var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
         didSet {
             headerText.text = model.headerText
@@ -24,10 +24,11 @@ class ElementList: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
+        var completion: ((NoteModel) -> Void)?
         setupHeaderText()
         setupMainText()
         setupDate()
-        layer.cornerRadius = 10
+        layer.cornerRadius = 14
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: topAnchor).isActive = true
         leadingAnchor.constraint(
@@ -52,7 +53,7 @@ class ElementList: UIView {
         headerText.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         addSubview(headerText)
 
-        headerText.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        headerText.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         headerText.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor,
             constant: 16
