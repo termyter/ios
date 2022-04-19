@@ -47,7 +47,6 @@ class ListViewController: UIViewController, ListDelegate {
         if let item = sender.view as? ElementList {
             let newNote = NoteViewController(completion: { [weak self] noteModel in
                 item.model = noteModel
-                self?.setupStackView()
             })
             newNote.applyModel(model: item.model)
             self.navigationController?.pushViewController(newNote, animated: true)
