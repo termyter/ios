@@ -46,7 +46,7 @@ class ListViewController: UIViewController, ListDelegate {
     @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
         if let item = sender.view as? ElementList {
             let newNote = NoteViewController()
-            newNote.noteView.model = item.model
+            newNote.applyModel(model: item.model)
             newNote.completion = { [weak self] noteModel in
                 item.model = noteModel
                 self?.setupStackView()

@@ -5,10 +5,10 @@ protocol NoteDelegate: AnyObject {
 }
 
 final class NoteViewController: UIViewController, NoteDelegate {
-    let noteView = NoteView()
+    private let noteView = NoteView()
     weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
-    public var completion: ((NoteModel) -> Void)?
+    var completion: ((NoteModel) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +38,10 @@ final class NoteViewController: UIViewController, NoteDelegate {
         ).isActive = true
         noteView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         noteView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    func applyModel(model: NoteModel) {
+        noteView.model = model
     }
 
     func update(noteModel: NoteModel) {
