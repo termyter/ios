@@ -6,11 +6,16 @@
 //
 import UIKit
 
+protocol ListViewControlleDelegate: AnyObject {
+    func update(noteModel: NoteModel)
+}
+
 class ListViewController: UIViewController {
     private var stackView = UIStackView()
     private var scrollView = UIScrollView()
     private var rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
+   // private let element = ElementList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,13 +39,7 @@ class ListViewController: UIViewController {
 
     @objc private func didAddButtonTap(_ sender: Any) {
         let newNote = NoteViewController()
-        let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
-        element.addGestureRecognizer(tap)
-        newNote.completion = { [weak self] noteModel in
-            element.model = noteModel
-            self?.stackView.addArrangedSubview(element)
-        }
+        newNote.listViewControlleDelegate = self
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
@@ -96,5 +95,15 @@ extension UIView {
         tap.numberOfTapsRequired = tapNumber
         addGestureRecognizer(tap)
         isUserInteractionEnabled = true
+    }
+}
+
+extension ListViewController: ListViewControlleDelegate {
+    func update(noteModel: NoteModel) {
+        let element = ElementList()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
+        element.addGestureRecognizer(tap)
+        element.model = noteModel
+        stackView.addArrangedSubview(element)
     }
 }

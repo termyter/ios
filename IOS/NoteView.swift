@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class NoteView: UIView {
+class NoteView: UIView, UITextViewDelegate {
     private var headerText = UITextField()
     private var scrollView = UIScrollView()
     private var date = UILabel()
@@ -110,7 +110,9 @@ class NoteView: UIView {
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-
+//        mainText.addTarget(self, action: #selector(ListViewController.update(noteModel:)), forControlEvents: UIControlEvents.EditingChanged)
+        mainText.delegate = self
+        
         scrollView.addSubview(mainText)
         mainText.topAnchor.constraint(equalTo: headerText.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -121,6 +123,10 @@ class NoteView: UIView {
             equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
     }
+//    func textViewDidChange(_ textView: UITextView) { //Handle the text changes here
+//        model.mainText = textView.text //the textView parameter is the textView where text was changed
+//        print(model.mainText)
+//    }
 
     func updateModel() {
         model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")

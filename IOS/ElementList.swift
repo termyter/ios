@@ -24,7 +24,6 @@ class ElementList: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
-        var completion: ((NoteModel) -> Void)?
         setupHeaderText()
         setupMainText()
         setupDate()

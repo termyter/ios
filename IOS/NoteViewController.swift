@@ -2,7 +2,7 @@ import UIKit
 
 final class NoteViewController: UIViewController {
     let noteView = NoteView()
-    //private var noteModel = NoteModel(headerText: "", mainText: "", date: "" )
+    weak var listViewControlleDelegate: ListViewControlleDelegate?
     private var rightBarButton = UIBarButtonItem()
     public var completion: ((NoteModel) -> Void)?
 
@@ -38,8 +38,10 @@ final class NoteViewController: UIViewController {
     @objc func adjustForKeyboard(notification: Notification) {
         if notification.name == UIResponder.keyboardWillHideNotification {
             setupRightBarButton()
+//            updateListView()
         } else {
             self.navigationItem.setRightBarButton(nil, animated: true)
+            //updateListView()
         }
     }
     private func setupRightBarButton() {
@@ -48,13 +50,16 @@ final class NoteViewController: UIViewController {
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-
+    func updateListView() {
+        noteView.updateModel()
+        listViewControlleDelegate?.update(noteModel: self.noteView.model)
+    }
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         noteView.updateModel()
         if noteView.isEmptyView() {
             showAlert()
         } else {
-            completion?(self.noteView.model)
+            listViewControlleDelegate?.update(noteModel: self.noteView.model)
             view.endEditing(true)
         }
     }
@@ -69,6 +74,13 @@ final class NoteViewController: UIViewController {
 }
 
 extension NoteView {
+
+        func textViewDidChange(_ textView: UITextView) { //Handle the text changes here
+            model.mainText = textView.text //the textView parameter is the textView where text was changed
+            print(model.mainText)
+        }
+
+    
     func isEmptyView() -> Bool {
         self.model.isEmpty
     }
