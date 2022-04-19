@@ -8,7 +8,20 @@ final class NoteViewController: UIViewController, NoteDelegate {
     private let noteView = NoteView()
     weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
-    var completion: ((NoteModel) -> Void)?
+    private var completion: ((NoteModel) -> Void)?
+
+    init(completion: ((NoteModel) -> Void)?) {
+        self.completion = completion
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
