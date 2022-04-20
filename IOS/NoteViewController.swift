@@ -1,10 +1,15 @@
 import UIKit
 
-final class NoteViewController: UIViewController {
+final class NoteViewController: UIViewController, ElementDelegate {
+    func updateElementView(noteModel: NoteModel) {
+
+    }
+
     private let noteView = NoteView()
+    //private let elementList = ElementList()
+    weak var elementDelegate: ElementDelegate?
     weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
-
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -30,6 +35,8 @@ final class NoteViewController: UIViewController {
                                         name: UIResponder.keyboardWillChangeFrameNotification,
                                         object: nil
                                        )
+        //elementDelegate?.updateElementView(noteModel: noteView.model)
+        noteView.elementDelegate = elementDelegate
 
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false

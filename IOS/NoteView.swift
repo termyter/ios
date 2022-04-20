@@ -80,7 +80,6 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        print(123)
         updateModel()
         elementDelegate?.updateElementView(noteModel: model)
     }

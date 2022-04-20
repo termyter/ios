@@ -48,6 +48,7 @@ class ListViewController: UIViewController, ListDelegate {
         if let item = sender.view as? ElementList {
             let newNote = NoteViewController()
             newNote.applyModel(model: item.model)
+            newNote.elementDelegate = item
             self.navigationController?.pushViewController(newNote, animated: true)
         } else {
             print("не ElementList") }
