@@ -1,20 +1,10 @@
 import UIKit
 
-protocol NoteDelegate: AnyObject {
-    func updateListView(noteModel: NoteModel)
-}
-
-final class NoteViewController: UIViewController, NoteDelegate {
+final class NoteViewController: UIViewController {
     private let noteView = NoteView()
     weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
-    private var completion: ((NoteModel) -> Void)?
-
-    init(completion: ((NoteModel) -> Void)?) {
-        self.completion = completion
-        super.init(nibName: nil, bundle: nil)
-    }
-
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,7 +30,6 @@ final class NoteViewController: UIViewController, NoteDelegate {
                                         name: UIResponder.keyboardWillChangeFrameNotification,
                                         object: nil
                                        )
-        noteView.noteDelegate = self
 
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +48,6 @@ final class NoteViewController: UIViewController, NoteDelegate {
 
     func updateListView(noteModel: NoteModel) {
         noteView.updateModel()
-        completion?(noteModel)
     }
 
     @objc func adjustForKeyboard(notification: Notification) {
@@ -83,7 +71,6 @@ final class NoteViewController: UIViewController, NoteDelegate {
             showAlert()
         } else {
             listDelegate?.update(noteModel: self.noteView.model)
-            completion?(self.noteView.model)
             view.endEditing(true)
         }
     }

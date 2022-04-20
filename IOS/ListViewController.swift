@@ -46,9 +46,7 @@ class ListViewController: UIViewController, ListDelegate {
 
     @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
         if let item = sender.view as? ElementList {
-            let newNote = NoteViewController(completion: { noteModel in
-                item.model = noteModel
-            })
+            let newNote = NoteViewController()
             newNote.applyModel(model: item.model)
             self.navigationController?.pushViewController(newNote, animated: true)
         } else {

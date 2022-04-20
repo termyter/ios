@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
-    weak var noteDelegate: NoteDelegate?
     weak var elementDelegate: ElementDelegate?
     private var headerText = UITextField()
     private var scrollView = UIScrollView()
@@ -81,7 +80,9 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        noteDelegate?.updateListView(noteModel: model)
+        print(123)
+        updateModel()
+        elementDelegate?.updateElementView(noteModel: model)
     }
 
     func updateModel() {
