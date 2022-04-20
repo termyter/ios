@@ -15,7 +15,6 @@ class ListViewController: UIViewController, ListDelegate {
     private let scrollView = UIScrollView()
     private let rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
-   // private let element = ElementList()
 
     override func viewDidLoad() {
         super.viewDidLoad()
