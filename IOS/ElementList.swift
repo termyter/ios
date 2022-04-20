@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+
+
 class ElementList: UIView {
     var completion: ((NoteModel) -> Void)?
     private var headerText = UILabel()
@@ -30,9 +32,9 @@ class ElementList: UIView {
         layer.cornerRadius = 14
     }
 
-    func didTapCompletion() {
-        completion?(self.model)
-    }
+//    func didTapCompletion() {
+//        completion?(self.model)
+//    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
