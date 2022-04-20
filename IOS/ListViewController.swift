@@ -11,9 +11,9 @@ protocol ListDelegate: AnyObject {
 }
 
 class ListViewController: UIViewController, ListDelegate {
-    private var stackView = UIStackView()
-    private var scrollView = UIScrollView()
-    private var rightBarButton = UIBarButtonItem()
+    private let stackView = UIStackView()
+    private let scrollView = UIScrollView()
+    private let rightBarButton = UIBarButtonItem()
     private let addButton = UIButton()
    // private let element = ElementList()
 
@@ -21,7 +21,7 @@ class ListViewController: UIViewController, ListDelegate {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         navigationItem.title = "Заметки"
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setupScrollView()
         setupStackView()
         setupAddButton()
