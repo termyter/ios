@@ -14,8 +14,8 @@
             filePath = "IOS/ElementList.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "setupMainText()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "IOS/ElementList.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "setupMainText()"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "IOS/ElementList.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "updateElementView(noteModel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -72,8 +72,8 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "F6BB5463-C35E-48A2-B5E7-12B7264ABBAB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
+            shouldBeEnabled = "No"
+            ignoreCount = "10"
             continueAfterRunningActions = "No"
             filePath = "IOS/NoteView.swift"
             startingColumnNumber = "9223372036854775807"

@@ -13,7 +13,7 @@ protocol ElementDelegate: AnyObject {
 }
 
 class ElementList: UIView, ElementDelegate {
-    private var noteView = NoteView()
+    //private var noteView = NoteView()
     private var headerText = UILabel()
     private var mainText = UILabel()
     private var date = UILabel()
@@ -32,10 +32,11 @@ class ElementList: UIView, ElementDelegate {
         setupMainText()
         setupDate()
         layer.cornerRadius = 14
-        noteView.elementDelegate = self
     }
 
     func updateElementView(noteModel: NoteModel) {
+        let noteView = NoteView()
+        noteView.elementDelegate = self
         model = noteModel
     }
 

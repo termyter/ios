@@ -4,7 +4,7 @@ final class NoteViewController: UIViewController {
     private let noteView = NoteView()
     weak var listDelegate: ListDelegate?
     private var rightBarButton = UIBarButtonItem()
-    
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
