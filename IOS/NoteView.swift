@@ -78,6 +78,15 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         let selectedRange = mainText.selectedRange
         mainText.scrollRangeToVisible(selectedRange)
     }
+
+    func textViewDidChange(_ textView: UITextView) {
+        noteDelegate?.updateListView(noteModel: model)
+    }
+
+    func updateModel() {
+        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
+    }
+
     private func setupDate() {
         date.translatesAutoresizingMaskIntoConstraints = false
         date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
@@ -122,14 +131,6 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         mainText.trailingAnchor.constraint(
             equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        noteDelegate?.update(noteModel: model)
-    }
-
-    func updateModel() {
-        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
     }
 
     private func setupHeaderText() {

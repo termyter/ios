@@ -1,7 +1,7 @@
 import UIKit
 
 protocol NoteDelegate: AnyObject {
-    func update(noteModel: NoteModel)
+    func updateListView(noteModel: NoteModel)
 }
 
 final class NoteViewController: UIViewController, NoteDelegate {
@@ -57,8 +57,9 @@ final class NoteViewController: UIViewController, NoteDelegate {
         noteView.model = model
     }
 
-    func update(noteModel: NoteModel) {
-        updateListView()
+    func updateListView(noteModel: NoteModel) {
+        noteView.updateModel()
+        completion?(noteModel)
     }
 
     @objc func adjustForKeyboard(notification: Notification) {
@@ -68,16 +69,14 @@ final class NoteViewController: UIViewController, NoteDelegate {
             self.navigationItem.setRightBarButton(nil, animated: true)
         }
     }
+
     private func setupRightBarButton() {
         rightBarButton.title = "Готово"
         rightBarButton.target = self
         rightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
-    func updateListView() {
-        noteView.updateModel()
-        completion?(self.noteView.model)
-    }
+
     @objc private func didRightBarButtonTapped(_ sender: Any) {
         noteView.updateModel()
         if noteView.isEmptyView() {
@@ -87,10 +86,6 @@ final class NoteViewController: UIViewController, NoteDelegate {
             completion?(self.noteView.model)
             view.endEditing(true)
         }
-    }
-
-    func update() {
-        updateListView()
     }
 
     private func showAlert() {

@@ -36,10 +36,12 @@ class ListViewController: UIViewController, ListDelegate {
         addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
     }
 
-    @objc private func didAddButtonTap(_ sender: Any) {
-        let newNote = NoteViewController()
-        newNote.listDelegate = self
-        self.navigationController?.pushViewController(newNote, animated: true)
+    func update(noteModel: NoteModel) {
+        let element = ElementList()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
+        element.addGestureRecognizer(tap)
+        element.model = noteModel
+        stackView.addArrangedSubview(element)
     }
 
     @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
@@ -52,12 +54,11 @@ class ListViewController: UIViewController, ListDelegate {
         } else {
             print("не ElementList") }
     }
-    func update(noteModel: NoteModel) {
-        let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
-        element.addGestureRecognizer(tap)
-        element.model = noteModel
-        stackView.addArrangedSubview(element)
+
+    @objc private func didAddButtonTap(_ sender: Any) {
+        let newNote = NoteViewController()
+        newNote.listDelegate = self
+        self.navigationController?.pushViewController(newNote, animated: true)
     }
 
     private func setupScrollView() {
@@ -92,6 +93,7 @@ class ListViewController: UIViewController, ListDelegate {
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 }
+
 extension UIView {
     func addTapGesture(tapNumber: Int, target: Any, action: Selector) {
         let tap = UITapGestureRecognizer(target: target, action: action)
