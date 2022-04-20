@@ -28,15 +28,6 @@ class ElementList: UIView {
         setupMainText()
         setupDate()
         layer.cornerRadius = 14
-        translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: topAnchor).isActive = true
-        leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: 16
-        ).isActive = true
-        trailingAnchor.constraint(
-            equalTo: trailingAnchor, constant: -16
-        ).isActive = true
     }
 
     func didTapCompletion() {
