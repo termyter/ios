@@ -8,9 +8,14 @@
 import Foundation
 import UIKit
 
+protocol ElementDelegate: AnyObject {
+    func updateElementView(noteModel: NoteModel)
+}
+
+class ElementList: UIView, ElementDelegate {
 
 
-class ElementList: UIView {
+    private var noteView = NoteView()
     var completion: ((NoteModel) -> Void)?
     private var headerText = UILabel()
     private var mainText = UILabel()
@@ -30,11 +35,12 @@ class ElementList: UIView {
         setupMainText()
         setupDate()
         layer.cornerRadius = 14
+        noteView.elementDelegate =  self
     }
 
-//    func didTapCompletion() {
-//        completion?(self.model)
-//    }
+    func updateElementView(noteModel: NoteModel) {
+        model = noteModel
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
