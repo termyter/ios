@@ -26,16 +26,6 @@ class ListViewController: UIViewController, ListDelegate {
         setupAddButton()
     }
 
-    private func setupAddButton() {
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.setImage(UIImage(named: "button"), for: .normal)
-        addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
-        view.addSubview(addButton)
-
-        addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
-    }
-
     func update(noteModel: NoteModel) {
         let element = ElementList()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
@@ -58,6 +48,16 @@ class ListViewController: UIViewController, ListDelegate {
         let newNote = NoteViewController()
         newNote.listDelegate = self
         self.navigationController?.pushViewController(newNote, animated: true)
+    }
+
+    private func setupAddButton() {
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.setImage(UIImage(named: "button"), for: .normal)
+        addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
+        view.addSubview(addButton)
+
+        addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
     }
 
     private func setupScrollView() {

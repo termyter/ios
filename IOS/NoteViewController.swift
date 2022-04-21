@@ -1,9 +1,6 @@
 import UIKit
 
-final class NoteViewController: UIViewController, ElementDelegate {
-    func updateElementView(noteModel: NoteModel) {
-    }
-
+final class NoteViewController: UIViewController {
     private let noteView = NoteView()
     weak var elementDelegate: ElementDelegate?
     weak var listDelegate: ListDelegate?
