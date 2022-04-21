@@ -16,7 +16,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     private var mainText = UITextView()
     private var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM.dd.yyyy  eeee HH:mm"
+        formatter.dateFormat = "MM.dd.yyyy eeee HH:mm"
         return formatter
     }()
     private var time = NSDate()
