@@ -92,12 +92,3 @@ class ListViewController: UIViewController, ListDelegate {
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
 }
-
-extension UIView {
-    func addTapGesture(tapNumber: Int, target: Any, action: Selector) {
-        let tap = UITapGestureRecognizer(target: target, action: action)
-        tap.numberOfTapsRequired = tapNumber
-        addGestureRecognizer(tap)
-        isUserInteractionEnabled = true
-    }
-}
