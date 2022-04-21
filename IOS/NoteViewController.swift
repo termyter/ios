@@ -47,10 +47,6 @@ final class NoteViewController: UIViewController {
         noteView.model = model
     }
 
-    func updateListView(noteModel: NoteModel) {
-        noteView.updateModel()
-    }
-
     @objc func adjustForKeyboard(notification: Notification) {
         if notification.name == UIResponder.keyboardWillHideNotification {
             setupRightBarButton()
