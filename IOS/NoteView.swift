@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
-    weak var elementDelegate: ElementDelegate?
+    weak var noteDelegate: NoteDelegate?
     private var headerText = UITextField()
     private var scrollView = UIScrollView()
     private var date = UILabel()
@@ -80,8 +80,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        updateModel()
-        elementDelegate?.updateElementView(noteModel: model)
+        noteDelegate?.update(noteModel: model)
     }
 
     func updateModel() {
