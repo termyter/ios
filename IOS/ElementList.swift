@@ -1,13 +1,14 @@
 //
-//  NoteCell.swift
-//  storubord
+//  NoteView.swift
+//  IOS
 //
-//  Created by termyter on 20.04.2022.
+//  Created by termyter on 07.04.2022.
 //
 
+import Foundation
 import UIKit
 
-class ElementList: UITableViewCell {
+class ElementList: UIView {
     private var headerText = UILabel()
     private var mainText = UILabel()
     private var date = UILabel()
@@ -19,12 +20,17 @@ class ElementList: UITableViewCell {
         }
     }
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = .systemBackground
         setupHeaderText()
         setupMainText()
         setupDate()
+        layer.cornerRadius = 14
+    }
+
+    func updateElementView(noteModel: NoteModel) {
+        model = noteModel
     }
 
     required init?(coder: NSCoder) {

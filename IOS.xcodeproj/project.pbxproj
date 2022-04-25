@@ -16,6 +16,7 @@
 		FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635C27F62A32008FCD68 /* NoteViewController.swift */; };
 		FF5C636227F62A33008FCD68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF5C636127F62A33008FCD68 /* Assets.xcassets */; };
 		FF5C636527F62A33008FCD68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5C636327F62A33008FCD68 /* LaunchScreen.storyboard */; };
+		FF760AD9281698FC00ABF568 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF760AD8281698FC00ABF568 /* CustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		FF5C636127F62A33008FCD68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF5C636427F62A33008FCD68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF5C636627F62A33008FCD68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF760AD8281698FC00ABF568 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 			children = (
 				FF16E65F2806D06000AF162F /* ListViewController.swift */,
 				FF16E6632806D9A400AF162F /* ElementList.swift */,
+				FF760AD8281698FC00ABF568 /* CustomCell.swift */,
 				FF5C635827F62A32008FCD68 /* AppDelegate.swift */,
 				FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */,
 				FF5C635C27F62A32008FCD68 /* NoteViewController.swift */,
@@ -174,6 +177,7 @@
 				FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */,
 				FF0E0FC627FF149D0017660F /* NoteView.swift in Sources */,
 				FF5C635B27F62A32008FCD68 /* SceneDelegate.swift in Sources */,
+				FF760AD9281698FC00ABF568 /* CustomCell.swift in Sources */,
 				FF16E6642806D9A400AF162F /* ElementList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

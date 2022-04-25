@@ -11,7 +11,23 @@ protocol ListDelegate: AnyObject {
     func update(noteModel: NoteModel)
 }
 
-class ListViewController: UIViewController, UITableViewDelegate,UITableViewDataSource, ListDelegate{
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
+    private var listModels: [NoteModel] = []
+    private let addButton = UIButton()
+    private var table = UITableView()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        table.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        navigationItem.title = "Заметка"
+        table.register(CustomCell.self, forCellReuseIdentifier: "Cell")
+        table.delegate = self
+        table.dataSource = self
+        setupUI()
+        setupAddButton()
+    }
+
     func update(noteModel: NoteModel) {
         let element = ElementList()
         element.model = noteModel
@@ -19,20 +35,33 @@ class ListViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         table.reloadData()
     }
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        listModels.count
+    }
 
-    private var listModels: [NoteModel] = []
-    private let addButton = UIButton()
-    private var table = UITableView()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        navigationItem.title = "Заметка"
-        table.register(ElementList.self, forCellReuseIdentifier: "Cell")
-        table.delegate = self
-        table.dataSource = self
-        setupUI()
-        setupAddButton()
+        cell.cellView.model = listModels[indexPath.row]
+        cell.layer.cornerRadius = 14
+        cell.layer.shadowRadius = 14
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print(indexPath.row)
+
+        let model = listModels[indexPath.row]
+
+        let newNote = NoteViewController()
+        newNote.applyModel(model: model)
+        newNote.completion = { noteModel in
+            self.listModels[indexPath.row] = noteModel
+            self.table.reloadData()
+        }
+        self.navigationController?.pushViewController(newNote, animated: true)
     }
 
     private func setupAddButton() {
@@ -53,38 +82,12 @@ class ListViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 
     private func setupUI() {
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.separatorStyle = .none
         view.addSubview(table)
 
+        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        listModels.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ElementList
-        cell.model = listModels[indexPath.row]
-        cell.layer.cornerRadius = 14
-        cell.frame = cell.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        print(indexPath.row)
-
-        let model = listModels[indexPath.row]
-
-        let newNote = NoteViewController()
-        newNote.applyModel(model: model)
-        newNote.completion = { noteModel in
-            self.listModels[indexPath.row] = noteModel
-            self.table.reloadData()
-        }
-        self.navigationController?.pushViewController(newNote, animated: true)
     }
 }
