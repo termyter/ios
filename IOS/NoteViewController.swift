@@ -76,7 +76,7 @@ final class NoteViewController: UIViewController, NoteDelegate {
         if noteView.isEmptyView() {
             showAlert()
         } else {
-            listDelegate?.update(noteModel: self.noteView.model)
+            listDelegate?.createCell(noteModel: self.noteView.model)
             completion?(self.noteView.model)
             view.endEditing(true)
         }

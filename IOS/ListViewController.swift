@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  storubord
+//  ListViewController.swift
+//  IOS
 //
 //  Created by termyter on 13.04.2022.
 //
@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ListDelegate: AnyObject {
-    func update(noteModel: NoteModel)
+    func createCell(noteModel: NoteModel)
 }
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
@@ -27,7 +27,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         setupAddButton()
     }
 
-    func update(noteModel: NoteModel) {
+    func createCell(noteModel: NoteModel) {
         let element = ElementList()
         element.model = noteModel
         listModels.append(element.model)
@@ -56,9 +56,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let newNote = NoteViewController()
         newNote.applyModel(model: model)
-        newNote.completion = { noteModel in
-            self.listModels[indexPath.row] = noteModel
-            self.table.reloadData()
+        newNote.completion = { [weak self] noteModel in
+            self?.listModels[indexPath.row] = noteModel
+            self?.table.reloadData()
         }
         self.navigationController?.pushViewController(newNote, animated: true)
     }

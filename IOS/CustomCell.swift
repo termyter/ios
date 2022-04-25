@@ -12,16 +12,16 @@ class CustomCell: UITableViewCell {
     var cellView = ElementList()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-            super.init(style: style, reuseIdentifier: reuseIdentifier)
-            backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
-            setupView()
-            layer.cornerRadius = 14
-            layer.shadowRadius = 14
-        }
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        setupView()
+        layer.cornerRadius = 14
+        layer.shadowRadius = 14
+    }
 
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private func setupView() {
         cellView.translatesAutoresizingMaskIntoConstraints = false
