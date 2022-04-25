@@ -11,6 +11,7 @@
 		FF0E0FC827FF14C80017660F /* NoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0E0FC727FF14C80017660F /* NoteModel.swift */; };
 		FF16E6602806D06000AF162F /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF16E65F2806D06000AF162F /* ListViewController.swift */; };
 		FF16E6642806D9A400AF162F /* ElementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF16E6632806D9A400AF162F /* ElementList.swift */; };
+		FF27BCAA2816B1A2003EAC18 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF27BCA92816B1A2003EAC18 /* CustomCell.swift */; };
 		FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635827F62A32008FCD68 /* AppDelegate.swift */; };
 		FF5C635B27F62A32008FCD68 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */; };
 		FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635C27F62A32008FCD68 /* NoteViewController.swift */; };
@@ -23,6 +24,7 @@
 		FF0E0FC727FF14C80017660F /* NoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteModel.swift; sourceTree = "<group>"; };
 		FF16E65F2806D06000AF162F /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		FF16E6632806D9A400AF162F /* ElementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementList.swift; sourceTree = "<group>"; };
+		FF27BCA92816B1A2003EAC18 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		FF5C635527F62A32008FCD68 /* IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF5C635827F62A32008FCD68 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,11 +66,12 @@
 			children = (
 				FF16E65F2806D06000AF162F /* ListViewController.swift */,
 				FF16E6632806D9A400AF162F /* ElementList.swift */,
-				FF5C635827F62A32008FCD68 /* AppDelegate.swift */,
-				FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */,
 				FF5C635C27F62A32008FCD68 /* NoteViewController.swift */,
 				FF0E0FC527FF149D0017660F /* NoteView.swift */,
 				FF0E0FC727FF14C80017660F /* NoteModel.swift */,
+				FF27BCA92816B1A2003EAC18 /* CustomCell.swift */,
+				FF5C635827F62A32008FCD68 /* AppDelegate.swift */,
+				FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */,
 				FF5C636127F62A33008FCD68 /* Assets.xcassets */,
 				FF5C636327F62A33008FCD68 /* LaunchScreen.storyboard */,
 				FF5C636627F62A33008FCD68 /* Info.plist */,
@@ -174,6 +177,7 @@
 				FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */,
 				FF0E0FC627FF149D0017660F /* NoteView.swift in Sources */,
 				FF5C635B27F62A32008FCD68 /* SceneDelegate.swift in Sources */,
+				FF27BCAA2816B1A2003EAC18 /* CustomCell.swift in Sources */,
 				FF16E6642806D9A400AF162F /* ElementList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
-    weak var elementDelegate: ElementDelegate?
+    weak var noteDelegate: NoteDelegate?
     private var headerText = UITextField()
     private var scrollView = UIScrollView()
     private var date = UILabel()
     private var mainText = UITextView()
     private var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MM.dd.yyyy eeee HH:mm"
+        formatter.dateFormat = "MM.dd.yyyy  eeee HH:mm"
         return formatter
     }()
     private var time = NSDate()
@@ -80,8 +80,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        updateModel()
-        elementDelegate?.updateElementView(noteModel: model)
+        noteDelegate?.update(noteModel: model)
     }
 
     func updateModel() {

@@ -1,16 +1,26 @@
 import UIKit
 
-final class NoteViewController: UIViewController {
+protocol NoteDelegate: AnyObject {
+    func update(noteModel: NoteModel)
+}
+
+final class NoteViewController: UIViewController, NoteDelegate {
     private let noteView = NoteView()
-    weak var elementDelegate: ElementDelegate?
     weak var listDelegate: ListDelegate?
+    public var completion: ((NoteModel) -> Void)?
     private var rightBarButton = UIBarButtonItem()
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func update(noteModel: NoteModel) {
+        noteView.updateModel()
+        completion?(self.noteView.model)
     }
 
     override func viewDidLoad() {
@@ -30,8 +40,7 @@ final class NoteViewController: UIViewController {
                                         name: UIResponder.keyboardWillChangeFrameNotification,
                                         object: nil
                                        )
-        noteView.elementDelegate = elementDelegate
-
+        noteView.noteDelegate = self
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(noteView)
@@ -68,6 +77,7 @@ final class NoteViewController: UIViewController {
             showAlert()
         } else {
             listDelegate?.update(noteModel: self.noteView.model)
+            completion?(self.noteView.model)
             view.endEditing(true)
         }
     }
