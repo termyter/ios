@@ -8,12 +8,18 @@ final class NoteViewController: UIViewController, NoteDelegate {
     weak var listDelegate: ListDelegate?
     public var completion: ((NoteModel) -> Void)?
     private var rightBarButton = UIBarButtonItem()
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func update(noteModel: NoteModel) {
+        noteView.updateModel()
+        completion?(self.noteView.model)
     }
 
     override func viewDidLoad() {
@@ -81,11 +87,6 @@ final class NoteViewController: UIViewController, NoteDelegate {
         alert.addAction(buttonAlert)
 
         present(alert, animated: true, completion: nil)
-    }
-
-    func update(noteModel: NoteModel) {
-        noteView.updateModel()
-        completion?(self.noteView.model)
     }
 }
 

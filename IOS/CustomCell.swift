@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomCell: UITableViewCell{
+class CustomCell: UITableViewCell {
     var cellView = ElementList()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
