@@ -19,6 +19,15 @@ class CustomCell: UITableViewCell {
         layer.shadowRadius = 14
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isHidden = false
+        isSelected = false
+        isHighlighted = false
+
+        cellView.model = NoteModel(headerText: "", mainText: "", date: "")
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
