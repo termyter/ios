@@ -28,9 +28,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func createCell(noteModel: NoteModel) {
-        let element = ElementList()
-        element.model = noteModel
-        listModels.append(element.model)
+        listModels.append(noteModel)
         table.reloadData()
     }
 
