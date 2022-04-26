@@ -29,10 +29,6 @@ class ElementList: UIView {
         layer.cornerRadius = 14
     }
 
-    func updateElementView(noteModel: NoteModel) {
-        model = noteModel
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

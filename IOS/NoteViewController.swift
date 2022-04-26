@@ -20,7 +20,7 @@ final class NoteViewController: UIViewController, NoteDelegate {
 
     func update(noteModel: NoteModel) {
         noteView.updateModel()
-        completion?(self.noteView.model)
+        completion?(noteView.model)
     }
 
     override func viewDidLoad() {
