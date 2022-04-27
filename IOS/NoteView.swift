@@ -19,7 +19,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         formatter.dateFormat = "MM.dd.yyyy eeee HH:mm"
         return formatter
     }()
-    private var dateNS = NSDate()
+    private var time = NSDate()
     var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
         didSet {
             headerText.text = model.headerText
@@ -92,7 +92,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         date.textColor = .gray
         date.textAlignment = .center
-        model.date = formatter.string(from: dateNS as Date)
+        model.date = formatter.string(from: time as Date)
         scrollView.addSubview(date)
         date.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         date.leadingAnchor.constraint(
