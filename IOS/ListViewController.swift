@@ -12,7 +12,20 @@ protocol ListDelegate: AnyObject {
 }
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
-    private var listModels: [NoteModel] = []
+    private var listModels: [NoteModel] {
+        get {
+            if let list = UserDefaults.standard.value(forKey: "listModels") as? Data {
+                let list2 = try? PropertyListDecoder().decode(Array<NoteModel>.self, from: list)
+                return list2 ?? []
+            } else {
+                return []
+            }
+        }
+        set {
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: "listModels")
+            UserDefaults.standard.synchronize()
+        }
+    }
     private let addButton = UIButton()
     private var table = UITableView()
 
