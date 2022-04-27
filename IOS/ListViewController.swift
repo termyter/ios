@@ -14,9 +14,9 @@ protocol ListDelegate: AnyObject {
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
     private var listModels: [NoteModel] {
         get {
-            if let list = UserDefaults.standard.value(forKey: "listModels") as? Data {
-                let list2 = try? PropertyListDecoder().decode(Array<NoteModel>.self, from: list)
-                return list2 ?? []
+            if let date = UserDefaults.standard.value(forKey: "listModels") as? Data {
+                let list = try? PropertyListDecoder().decode(Array<NoteModel>.self, from: date)
+                return list ?? []
             } else {
                 return []
             }
