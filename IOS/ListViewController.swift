@@ -26,9 +26,10 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             UserDefaults.standard.synchronize()
         }
     }
-    private let addButton = UIButton()
+    private var addButton = UIButton()
     private var table = UITableView()
     private var rightBarButton = UIBarButtonItem()
+    private var constrintAddButton: NSLayoutConstraint! = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +39,29 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         table.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         table.delegate = self
         table.dataSource = self
+
         setupUI()
         setupAddButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80).isActive = false
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 80).isActive = true
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                UIView.animate(
+                withDuration: 2.5,
+                delay: 0,
+                usingSpringWithDamping: 0.1,
+                initialSpringVelocity: 1,
+                options: [],
+                animations: { [self] in
+                    constrintAddButton.constant = -69
+                    self.view.layoutIfNeeded()
+                }
+            )
+        }
     }
 
     func createCell(noteModel: NoteModel) {
@@ -79,24 +101,61 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupRightBarButton() {
         rightBarButton.title = "Выбрать"
         rightBarButton.target = self
-        //rightBarButton.action = #selector(didRightBarButtonTapped(_:))
+        //rightBarButton.action = #selector(addButtonAnim(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
+
 
     private func setupAddButton() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.setImage(UIImage(named: "button"), for: .normal)
         addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
         view.addSubview(addButton)
-
+        constrintAddButton = NSLayoutConstraint(item: addButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 69)
+        self.view.addConstraint(constrintAddButton)
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -19).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+        //addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 80).isActive = true
     }
 
     @objc private func didAddButtonTap(_ sender: Any) {
+        addButtonAnim()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         let newNote = NoteViewController()
         newNote.listDelegate = self
         self.navigationController?.pushViewController(newNote, animated: true)
+        }
+    }
+
+    @objc private func addKeyFrames() {
+        UIView.addKeyframe(
+            withRelativeStartTime: 0,
+            relativeDuration: 0.5
+        ) {
+            self.addButton.center.y -= 50
+        }
+        UIView.addKeyframe(
+            withRelativeStartTime: 0.5,
+            relativeDuration: 0.5
+        ) {
+            self.addButton.center.y += 200
+            self.constrintAddButton.constant = 69
+        }
+    }
+
+    @objc private func addButtonAnim() {
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//            //self.constrintAddButton.constant = 69
+//        }
+        UIView.animateKeyframes(
+            withDuration: 1.5,
+            delay: 0,
+            options: [.repeat],
+            animations: {
+                self.addKeyFrames()
+            },
+            completion: nil
+        )
     }
 
     private func setupUI() {
