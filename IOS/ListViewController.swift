@@ -28,6 +28,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     private let addButton = UIButton()
     private var table = UITableView()
+    private var rightBarButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
