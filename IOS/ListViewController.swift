@@ -34,6 +34,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         table.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         navigationItem.title = "Заметка"
+        setupRightBarButton()
         table.register(CustomCell.self, forCellReuseIdentifier: "Cell")
         table.delegate = self
         table.dataSource = self
@@ -73,6 +74,13 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             self?.table.reloadData()
         }
         self.navigationController?.pushViewController(newNote, animated: true)
+    }
+
+    private func setupRightBarButton() {
+        rightBarButton.title = "Выбрать"
+        rightBarButton.target = self
+        //rightBarButton.action = #selector(didRightBarButtonTapped(_:))
+        navigationItem.rightBarButtonItem = rightBarButton
     }
 
     private func setupAddButton() {
