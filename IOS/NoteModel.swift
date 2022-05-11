@@ -7,10 +7,11 @@
 
 import Foundation
 
-struct NoteModel: Codable {
+struct NoteModel: Codable, Equatable {
     var headerText: String
     var mainText: String?
     var date: String
+    var isSelected: Bool = false
     var isEmpty: Bool {
         return self.headerText.isEmpty
     }

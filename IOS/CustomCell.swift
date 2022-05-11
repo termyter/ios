@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class CustomCell: UITableViewCell {
+    var list = ListViewController()
     var cellView = ElementList()
+    private var selectedButton = UIButton(type: .custom)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,13 +21,17 @@ class CustomCell: UITableViewCell {
         layer.shadowRadius = 14
     }
 
+    func isEnding(isEnding: Bool) {
+        cellView.isEndingCell(isEnding: isEnding)
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         isHidden = false
         isSelected = false
         isHighlighted = false
 
-        cellView.model = NoteModel(headerText: "", mainText: "", date: "")
+        cellView.model = NoteModel(headerText: "", mainText: "", date: "", isSelected: false)
     }
 
     required init?(coder: NSCoder) {
