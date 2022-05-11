@@ -49,7 +49,6 @@ class ElementList: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     func isEndingCell(isEnding: Bool) {
         if isEnding {
             DispatchQueue.main.asyncAfter(deadline: .now()) {
