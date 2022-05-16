@@ -53,10 +53,10 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 80).isActive = true
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             UIView.animate(
-                withDuration: 1.5,
+                withDuration: 1,
                 delay: 0,
                 usingSpringWithDamping: 0.1,
-                initialSpringVelocity: 1,
+                initialSpringVelocity: 0.8,
                 options: [],
                 animations: { [self] in
                     constrintAddButton.constant = -69
