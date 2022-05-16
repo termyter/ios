@@ -57,8 +57,6 @@ class ElementList: UIView {
                     delay: 0,
                     options: [],
                     animations: { [self] in
-                        self.selectedButton.isHidden = false
-                        self.headerText.frame.origin.x = 60
                         self.headderIsEnabledLeadingAnchor = self.headerText.leadingAnchor.constraint(
                             equalTo: self.leadingAnchor,
                             constant: 60
@@ -66,7 +64,6 @@ class ElementList: UIView {
                         self.headerLeadingAnchor?.isActive = false
                         self.headderIsEnabledLeadingAnchor?.isActive = true
 
-                        self.mainText.frame.origin.x = 60
                         self.mainIsEnabledLeadingAnchor = self.mainText.leadingAnchor.constraint(
                             equalTo: self.leadingAnchor,
                             constant: 60
@@ -78,17 +75,17 @@ class ElementList: UIView {
                             equalTo: self.leadingAnchor,
                             constant: 60
                         )
-                        self.date.frame.origin.x = 60
                         self.dateLeadingAnchor?.isActive = false
                         self.dateIsEnabledLeadingAnchor?.isActive = true
 
+                        self.selectedButton.alpha = 1
                         self.buttonIsEnabledLeadingAnchor = self.selectedButton.leadingAnchor.constraint(
                             equalTo: self.leadingAnchor,
                             constant: 24
                         )
-                        self.selectedButton.frame.origin.x = 24
                         self.buttonLeadingAnchor?.isActive = false
                         self.buttonIsEnabledLeadingAnchor?.isActive = true
+                        layoutIfNeeded()
                     }
                 )
             }
@@ -99,23 +96,21 @@ class ElementList: UIView {
                     delay: 0,
                     options: [],
                     animations: { [self] in
-                        self.headerText.frame.origin.x = 16
-                        self.mainText.frame.origin.x = 16
-                        self.date.frame.origin.x = 16
-                        self.selectedButton.frame.origin.x = -50
+                        self.headerLeadingAnchor?.isActive = true
+                        self.headderIsEnabledLeadingAnchor?.isActive = false
+
+                        self.mainLeadingAnchor?.isActive = true
+                        self.mainIsEnabledLeadingAnchor?.isActive = false
+
+                        self.dateLeadingAnchor?.isActive = true
+                        self.dateIsEnabledLeadingAnchor?.isActive = false
+
+                        self.selectedButton.alpha = 0
+                        self.buttonLeadingAnchor?.isActive = true
+                        self.buttonIsEnabledLeadingAnchor?.isActive = false
+                        layoutIfNeeded()
                     }
                 )
-                self.headerLeadingAnchor?.isActive = true
-                self.headderIsEnabledLeadingAnchor?.isActive = false
-
-                self.mainLeadingAnchor?.isActive = true
-                self.mainIsEnabledLeadingAnchor?.isActive = false
-
-                self.dateLeadingAnchor?.isActive = true
-                self.dateIsEnabledLeadingAnchor?.isActive = false
-
-                self.buttonLeadingAnchor?.isActive = true
-                self.buttonIsEnabledLeadingAnchor?.isActive = false
             }
         }
     }
@@ -133,7 +128,7 @@ class ElementList: UIView {
 
         buttonLeadingAnchor = selectedButton.leadingAnchor.constraint(
             equalTo: leadingAnchor,
-            constant: -50
+            constant: 0
         )
         self.buttonLeadingAnchor?.isActive = true
         self.selectedButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 37).isActive = true
