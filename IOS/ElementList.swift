@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class ElementList: UIView {
-    var listViewController = ListViewController()
     private var headerText = UILabel()
     private var mainText = UILabel()
     private var date = UILabel()
@@ -19,14 +18,16 @@ class ElementList: UIView {
             date.text = model.date
             mainText.text = model.mainText
             if model.isSelected {
+                backgroundColor = .gray
                 selectedButton.setImage(UIImage(named: "selected"), for: .normal)
             } else {
+                backgroundColor = .systemBackground
                 selectedButton.setImage(UIImage(named: "unselected"), for: .normal)
             }
         }
     }
     private var selectedButton = UIButton(type: .custom)
-    var buttonLeadingAnchor: NSLayoutConstraint?
+    private var buttonLeadingAnchor: NSLayoutConstraint?
     var buttonIsEnabledLeadingAnchor: NSLayoutConstraint?
     var headerLeadingAnchor: NSLayoutConstraint?
     var headderIsEnabledLeadingAnchor: NSLayoutConstraint?
@@ -34,8 +35,76 @@ class ElementList: UIView {
     var mainIsEnabledLeadingAnchor: NSLayoutConstraint?
     var dateLeadingAnchor: NSLayoutConstraint?
     var dateIsEnabledLeadingAnchor: NSLayoutConstraint?
+    var isEditing: Bool {
+        didSet {
+            if isEditing {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    UIView.animate(
+                        withDuration: 0.5,
+                        delay: 0,
+                        options: [],
+                        animations: {
+                            self.headderIsEnabledLeadingAnchor = self.headerText.leadingAnchor.constraint(
+                                equalTo: self.leadingAnchor,
+                                constant: 60
+                            )
+                            self.headerLeadingAnchor?.isActive = false
+                            self.headderIsEnabledLeadingAnchor?.isActive = true
+
+                            self.mainIsEnabledLeadingAnchor = self.mainText.leadingAnchor.constraint(
+                                equalTo: self.leadingAnchor,
+                                constant: 60
+                            )
+                            self.mainLeadingAnchor?.isActive = false
+                            self.mainIsEnabledLeadingAnchor?.isActive = true
+
+                            self.dateIsEnabledLeadingAnchor = self.date.leadingAnchor.constraint(
+                                equalTo: self.leadingAnchor,
+                                constant: 60
+                            )
+                            self.dateLeadingAnchor?.isActive = false
+                            self.dateIsEnabledLeadingAnchor?.isActive = true
+
+                            self.selectedButton.alpha = 1
+                            self.buttonIsEnabledLeadingAnchor = self.selectedButton.leadingAnchor.constraint(
+                                equalTo: self.leadingAnchor,
+                                constant: 24
+                            )
+                            self.buttonLeadingAnchor?.isActive = false
+                            self.buttonIsEnabledLeadingAnchor?.isActive = true
+                            self.layoutIfNeeded()
+                        }
+                    )
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    UIView.animate(
+                        withDuration: 0.5,
+                        delay: 0,
+                        options: [],
+                        animations: { [self] in
+                            self.headerLeadingAnchor?.isActive = true
+                            self.headderIsEnabledLeadingAnchor?.isActive = false
+
+                            self.mainLeadingAnchor?.isActive = true
+                            self.mainIsEnabledLeadingAnchor?.isActive = false
+
+                            self.dateLeadingAnchor?.isActive = true
+                            self.dateIsEnabledLeadingAnchor?.isActive = false
+
+                            self.selectedButton.alpha = 0
+                            self.buttonLeadingAnchor?.isActive = true
+                            self.buttonIsEnabledLeadingAnchor?.isActive = false
+                            layoutIfNeeded()
+                        }
+                    )
+                }
+            }
+        }
+    }
 
     override init(frame: CGRect) {
+        isEditing = false
         super.init(frame: frame)
         backgroundColor = .systemBackground
         setupHeaderText()
@@ -47,72 +116,6 @@ class ElementList: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    func isEndingCell(isEnding: Bool) {
-        if isEnding {
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                UIView.animate(
-                    withDuration: 1,
-                    delay: 0,
-                    options: [],
-                    animations: { [self] in
-                        self.headderIsEnabledLeadingAnchor = self.headerText.leadingAnchor.constraint(
-                            equalTo: self.leadingAnchor,
-                            constant: 60
-                        )
-                        self.headerLeadingAnchor?.isActive = false
-                        self.headderIsEnabledLeadingAnchor?.isActive = true
-
-                        self.mainIsEnabledLeadingAnchor = self.mainText.leadingAnchor.constraint(
-                            equalTo: self.leadingAnchor,
-                            constant: 60
-                        )
-                        self.mainLeadingAnchor?.isActive = false
-                        self.mainIsEnabledLeadingAnchor?.isActive = true
-
-                        self.dateIsEnabledLeadingAnchor = self.date.leadingAnchor.constraint(
-                            equalTo: self.leadingAnchor,
-                            constant: 60
-                        )
-                        self.dateLeadingAnchor?.isActive = false
-                        self.dateIsEnabledLeadingAnchor?.isActive = true
-
-                        self.selectedButton.alpha = 1
-                        self.buttonIsEnabledLeadingAnchor = self.selectedButton.leadingAnchor.constraint(
-                            equalTo: self.leadingAnchor,
-                            constant: 24
-                        )
-                        self.buttonLeadingAnchor?.isActive = false
-                        self.buttonIsEnabledLeadingAnchor?.isActive = true
-                        layoutIfNeeded()
-                    }
-                )
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                UIView.animate(
-                    withDuration: 1,
-                    delay: 0,
-                    options: [],
-                    animations: { [self] in
-                        self.headerLeadingAnchor?.isActive = true
-                        self.headderIsEnabledLeadingAnchor?.isActive = false
-
-                        self.mainLeadingAnchor?.isActive = true
-                        self.mainIsEnabledLeadingAnchor?.isActive = false
-
-                        self.dateLeadingAnchor?.isActive = true
-                        self.dateIsEnabledLeadingAnchor?.isActive = false
-
-                        self.selectedButton.alpha = 0
-                        self.buttonLeadingAnchor?.isActive = true
-                        self.buttonIsEnabledLeadingAnchor?.isActive = false
-                        layoutIfNeeded()
-                    }
-                )
-            }
-        }
     }
 
     @objc private func didAddButtonTap(_ sender: Any) {

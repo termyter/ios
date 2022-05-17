@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class CustomCell: UITableViewCell {
-    var list = ListViewController()
     var cellView = ElementList()
     private var selectedButton = UIButton(type: .custom)
 
@@ -21,8 +20,8 @@ class CustomCell: UITableViewCell {
         layer.shadowRadius = 14
     }
 
-    func isEnding(isEnding: Bool) {
-        cellView.isEndingCell(isEnding: isEnding)
+    func changeModEnding(_ isEnding: Bool) {
+        cellView.isEditing = isEnding
     }
 
     override func prepareForReuse() {

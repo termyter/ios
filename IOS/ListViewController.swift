@@ -80,7 +80,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("не CustomCell")
         }
 
-        cell.isEnding(isEnding: isEdit)
+        cell.changeModEnding(isEdit)
 
         cell.cellView.model = listModels[indexPath.row]
         cell.layer.cornerRadius = 14
@@ -142,11 +142,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func setupRightBarButton() {
         rightBarButton.title = "Выбрать"
         rightBarButton.target = self
-        rightBarButton.action = #selector(didRightBarButton(_:))
+        rightBarButton.action = #selector(didRightBarButtonTap(_:))
         navigationItem.rightBarButtonItem = rightBarButton
     }
 
-    @objc private func didRightBarButton(_ sender: Any) {
+    @objc private func didRightBarButtonTap(_ sender: Any) {
         table.reloadData()
         if self.isEdit == true {
             UIView.transition(
