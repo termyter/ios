@@ -80,7 +80,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("не CustomCell")
         }
 
-        cell.changeModEnding(isEdit)
+        cell.changeModeEnding(isEdit)
 
         cell.cellView.model = listModels[indexPath.row]
         cell.layer.cornerRadius = 14

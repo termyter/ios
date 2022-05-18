@@ -20,7 +20,7 @@ class CustomCell: UITableViewCell {
         layer.shadowRadius = 14
     }
 
-    func changeModEnding(_ isEnding: Bool) {
+    func changeModeEnding(_ isEnding: Bool) {
         cellView.isEditing = isEnding
     }
 

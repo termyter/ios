@@ -18,23 +18,21 @@ class ElementList: UIView {
             date.text = model.date
             mainText.text = model.mainText
             if model.isSelected {
-                backgroundColor = .gray
                 selectedButton.setImage(UIImage(named: "selected"), for: .normal)
             } else {
-                backgroundColor = .systemBackground
                 selectedButton.setImage(UIImage(named: "unselected"), for: .normal)
             }
         }
     }
     private var selectedButton = UIButton(type: .custom)
     private var buttonLeadingAnchor: NSLayoutConstraint?
-    var buttonIsEnabledLeadingAnchor: NSLayoutConstraint?
-    var headerLeadingAnchor: NSLayoutConstraint?
-    var headderIsEnabledLeadingAnchor: NSLayoutConstraint?
-    var mainLeadingAnchor: NSLayoutConstraint?
-    var mainIsEnabledLeadingAnchor: NSLayoutConstraint?
-    var dateLeadingAnchor: NSLayoutConstraint?
-    var dateIsEnabledLeadingAnchor: NSLayoutConstraint?
+    private var buttonIsEnabledLeadingAnchor: NSLayoutConstraint?
+    private var headerLeadingAnchor: NSLayoutConstraint?
+    private var headderIsEnabledLeadingAnchor: NSLayoutConstraint?
+    private var mainLeadingAnchor: NSLayoutConstraint?
+    private var mainIsEnabledLeadingAnchor: NSLayoutConstraint?
+    private var dateLeadingAnchor: NSLayoutConstraint?
+    private var dateIsEnabledLeadingAnchor: NSLayoutConstraint?
     var isEditing: Bool {
         didSet {
             if isEditing {
