@@ -38,7 +38,7 @@ class CustomCell: UITableViewCell {
         isSelected = false
         isHighlighted = false
 
-        cellView.model = NoteModel(headerText: "", mainText: "", date: "", isSelected: false)
+        cellView.model = NoteModel.empty
     }
 
     required init?(coder: NSCoder) {

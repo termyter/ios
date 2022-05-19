@@ -15,4 +15,5 @@ struct NoteModel: Codable {
     var isEmpty: Bool {
         return self.headerText.isEmpty
     }
+    static let empty = NoteModel(headerText: "", mainText: "", date: "", isSelected: false)
 }

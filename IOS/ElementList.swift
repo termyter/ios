@@ -12,7 +12,7 @@ class ElementList: UIView {
     private var headerText = UILabel()
     private var mainText = UILabel()
     private var date = UILabel()
-    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "", isSelected: false) {
+    var model: NoteModel = NoteModel.empty {
         didSet {
             headerText.text = model.headerText
             date.text = model.date

@@ -20,7 +20,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         return formatter
     }()
     private var time = Date()
-    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
+    var model: NoteModel = NoteModel.empty {
         didSet {
             headerText.text = model.headerText
             date.text = model.date
