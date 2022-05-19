@@ -82,7 +82,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         cell.changeModeEnding(isEdit)
 
-        cell.cellView.model = listModels[indexPath.row]
+        cell.model = listModels[indexPath.row]
         cell.layer.cornerRadius = 14
         cell.layer.shadowRadius = 14
 

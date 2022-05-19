@@ -9,8 +9,16 @@ import Foundation
 import UIKit
 
 class CustomCell: UITableViewCell {
-    var cellView = ElementList()
+    private var cellView = ElementList()
     private var selectedButton = UIButton(type: .custom)
+    var model: NoteModel? {
+        get {
+            cellView.model
+        }
+        set {
+            cellView.model = newValue!
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
