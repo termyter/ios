@@ -29,7 +29,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var addButton = UIButton()
     private var table = UITableView()
     private var rightBarButton = UIBarButtonItem()
-    private var constrintAddButton: NSLayoutConstraint! = nil
+    private var constraintAddButton: NSLayoutConstraint?
     private var isEdit = false
 
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                 initialSpringVelocity: 0.8,
                 options: [],
                 animations: { [self] in
-                    constrintAddButton.constant = -69
+                    constraintAddButton?.constant = -69
                     self.view.layoutIfNeeded()
                 }
             )
@@ -114,22 +114,23 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             listModels[index] = object
             index += 1
         }
+//        for (var index ,var object) in listModels.enumerated() where
         table.reloadData()
     }
 
     private func showAlert() {
         let alert = UIAlertController(
-                                      title: "Внимание",
-                                      message: "Вы не выбрали ни одной заметки",
-                                      preferredStyle: .alert
-                                     )
+            title: "Внимание",
+            message: "Вы не выбрали ни одной заметки",
+            preferredStyle: .alert
+        )
         let buttonAlert = UIAlertAction(title: "ОК", style: .default, handler: nil)
         alert.addAction(buttonAlert)
 
         present(alert, animated: true, completion: nil)
     }
 
-    private func deleteSelect() {
+    private func deleteSelectedNote() {
         let deleteList = listModels.filter { !$0.isSelected }
         if deleteList.count == listModels.count {
             showAlert()
@@ -148,14 +149,14 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @objc private func didRightBarButtonTap(_ sender: Any) {
         table.reloadData()
-        if self.isEdit == true {
+        if isEdit == true {
             UIView.transition(
-                              with: addButton,
-                              duration: 1,
-                              options: [.transitionFlipFromLeft],
-                              animations: {
-                                  self.addButton.setImage(UIImage(named: "addButton"), for: .normal)
-                              }
+                with: addButton,
+                duration: 1,
+                options: [.transitionFlipFromLeft],
+                animations: {
+                    self.addButton.setImage(UIImage(named: "addButton"), for: .normal)
+                }
             )
             deSelect()
             rightBarButton.title = "Выбрать"
@@ -163,12 +164,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             rightBarButton.title = "Готово"
             UIView.transition(
-                              with: addButton,
-                              duration: 1,
-                              options: [.transitionFlipFromLeft],
-                              animations: {
-                                  self.addButton.setImage(UIImage(named: "deleteButton"), for: .normal)
-                              }
+                with: addButton,
+                duration: 1,
+                options: [.transitionFlipFromLeft],
+                animations: {
+                    self.addButton.setImage(UIImage(named: "deleteButton"), for: .normal)
+                }
             )
             self.isEdit = true
         }
@@ -179,7 +180,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.setImage(UIImage(named: "addButton"), for: .normal)
         addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
         view.addSubview(addButton)
-        constrintAddButton = NSLayoutConstraint(
+        constraintAddButton = NSLayoutConstraint(
             item: addButton,
             attribute: .bottom,
             relatedBy: .equal,
@@ -188,15 +189,19 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             multiplier: 1,
             constant: 69
         )
-        self.view.addConstraint(constrintAddButton)
+        guard let constraintAddButton = constraintAddButton else {
+            return
+        }
+        self.view.addConstraint(constraintAddButton)
+
         addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -19).isActive = true
     }
 
     @objc private func didAddButtonTap(_ sender: Any) {
         if isEdit {
-            deleteSelect()
+            deleteSelectedNote()
         } else {
-            addButtonAnim()
+            addButtonAnimation()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 let newNote = NoteViewController()
                 newNote.listDelegate = self
@@ -217,11 +222,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             relativeDuration: 0.5
         ) {
             self.addButton.center.y += 200
-            self.constrintAddButton.constant = 69
+            self.constraintAddButton?.constant = 69
         }
     }
 
-    @objc private func addButtonAnim() {
+    @objc private func addButtonAnimation() {
         UIView.animateKeyframes(
             withDuration: 1.5,
             delay: 0,

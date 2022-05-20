@@ -62,9 +62,9 @@
             filePath = "IOS/ListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "deleteSelect()"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "deleteSelectedNote()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
