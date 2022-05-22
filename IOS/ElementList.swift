@@ -80,20 +80,20 @@ class ElementList: UIView {
                         withDuration: 0.5,
                         delay: 0,
                         options: [],
-                        animations: { [self] in
-                            self.headerLeadingAnchor?.isActive = true
-                            self.headderIsEnabledLeadingAnchor?.isActive = false
+                        animations: { [weak self] in
+                            self?.headerLeadingAnchor?.isActive = true
+                            self?.headderIsEnabledLeadingAnchor?.isActive = false
 
-                            self.mainLeadingAnchor?.isActive = true
-                            self.mainIsEnabledLeadingAnchor?.isActive = false
+                            self?.mainLeadingAnchor?.isActive = true
+                            self?.mainIsEnabledLeadingAnchor?.isActive = false
 
-                            self.dateLeadingAnchor?.isActive = true
-                            self.dateIsEnabledLeadingAnchor?.isActive = false
+                            self?.dateLeadingAnchor?.isActive = true
+                            self?.dateIsEnabledLeadingAnchor?.isActive = false
 
-                            self.selectedButton.alpha = 0
-                            self.buttonLeadingAnchor?.isActive = true
-                            self.buttonIsEnabledLeadingAnchor?.isActive = false
-                            layoutIfNeeded()
+                            self?.selectedButton.alpha = 0
+                            self?.buttonLeadingAnchor?.isActive = true
+                            self?.buttonIsEnabledLeadingAnchor?.isActive = false
+                            self?.layoutIfNeeded()
                         }
                     )
                 }
@@ -131,8 +131,8 @@ class ElementList: UIView {
             equalTo: leadingAnchor,
             constant: 0
         )
-        self.buttonLeadingAnchor?.isActive = true
-        self.selectedButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 37).isActive = true
+        buttonLeadingAnchor?.isActive = true
+        selectedButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 37).isActive = true
     }
 
     private func setupHeaderText() {

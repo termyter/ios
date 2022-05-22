@@ -16,7 +16,7 @@ class CustomCell: UITableViewCell {
             cellView.model
         }
         set {
-            cellView.model = newValue!
+            cellView.model = newValue ?? NoteModel.empty
         }
     }
 

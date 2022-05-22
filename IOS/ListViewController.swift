@@ -58,9 +58,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                 usingSpringWithDamping: 0.1,
                 initialSpringVelocity: 0.8,
                 options: [],
-                animations: { [self] in
-                    constraintAddButton?.constant = -69
-                    self.view.layoutIfNeeded()
+                animations: { [weak self] in
+                    self?.constraintAddButton?.constant = -69
+                    self?.view.layoutIfNeeded()
                 }
             )
         }
@@ -108,13 +108,10 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     private func deSelect() {
-        var index = 0
-        for var object in listModels where object.isSelected {
+        for (index, var object) in listModels.enumerated() where object.isSelected {
             object.isSelected = !object.isSelected
             listModels[index] = object
-            index += 1
         }
-//        for (var index ,var object) in listModels.enumerated() where
         table.reloadData()
     }
 
@@ -160,7 +157,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             )
             deSelect()
             rightBarButton.title = "Выбрать"
-            self.isEdit = false
+            isEdit = false
         } else {
             rightBarButton.title = "Готово"
             UIView.transition(
@@ -171,7 +168,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.addButton.setImage(UIImage(named: "deleteButton"), for: .normal)
                 }
             )
-            self.isEdit = true
+            isEdit = true
         }
     }
 
@@ -215,14 +212,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             withRelativeStartTime: 0,
             relativeDuration: 0.5
         ) {
-            self.addButton.center.y -= 50
+            self.constraintAddButton?.constant -= 60
+            self.view.layoutIfNeeded()
         }
         UIView.addKeyframe(
             withRelativeStartTime: 0.5,
             relativeDuration: 0.5
         ) {
-            self.addButton.center.y += 200
             self.constraintAddButton?.constant = 69
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -231,8 +229,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             withDuration: 1.5,
             delay: 0,
             options: [.repeat],
-            animations: {
-                self.addKeyFrames()
+            animations: { [weak self] in
+                self?.addKeyFrames()
             },
             completion: nil
         )
