@@ -79,6 +79,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
             fatalError("не CustomCell")
         }
+        cell.selectionStyle = .none
 
         cell.changeModeEnding(isEdit)
 
