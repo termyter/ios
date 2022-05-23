@@ -146,7 +146,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @objc private func didRightBarButtonTap(_ sender: Any) {
         table.reloadData()
-        if isEdit == true {
+        if isEdit {
             UIView.transition(
                 with: addButton,
                 duration: 1,
