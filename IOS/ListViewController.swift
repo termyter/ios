@@ -118,8 +118,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func getListModels(noteModels: [NoteModel]) {
         listModels += noteModels
         listModels = listModels.uniqueElements()
+        table.reloadData()
     }
-
 
     private func deSelect() {
         for (index, var object) in listModels.enumerated() where object.isSelected {
@@ -274,14 +274,26 @@ class Worker {
             else { return }
             _ = String(data: data, encoding: .utf8)
             for object in response {
+                let timeInterval = TimeInterval(object.date)
+
+                let myNSDate = Date(timeIntervalSince1970: timeInterval)
+
+                let dateFormatter = DateFormatter()
+
+                dateFormatter.string(from: myNSDate)
+                dateFormatter.dateFormat = "YY.MM.dd"
+
                 listModels.append(NoteModel(
                     headerText: object.header,
                     mainText: object.text,
-                    date: object.date as? String ?? ""
+                    date: dateFormatter.string(from: myNSDate)
                     )
                 )
+                print(dateFormatter.string(from: myNSDate))
             }
-            self.workerDelegate?.getListModels(noteModels: listModels)
+            DispatchQueue.main.async {
+                self.workerDelegate?.getListModels(noteModels: listModels)
+            }
         }.resume()
     }
 
@@ -301,8 +313,6 @@ class Worker {
             URLQueryItem(name: "alt", value: "media"),
             URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
         ]
-        print(urlComponents.url!)
-        print(123)
         return urlComponents.url!
     }
 
