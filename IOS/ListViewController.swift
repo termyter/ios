@@ -11,7 +11,11 @@ protocol ListDelegate: AnyObject {
     func createCell(noteModel: NoteModel)
 }
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
+protocol WorkerDelegate: AnyObject {
+    func getListModels(noteModels: [NoteModel])
+}
+
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate, WorkerDelegate {
     private var listModels: [NoteModel] {
         get {
             if let date = UserDefaults.standard.value(forKey: "listModels") as? Data {
@@ -34,6 +38,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let worker = Worker()
+        worker.workerDelegate = self
+        worker.fetch()
         table.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
         navigationItem.title = "Заметка"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -107,6 +114,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.navigationController?.pushViewController(newNote, animated: true)
         }
     }
+
+    func getListModels(noteModels: [NoteModel]) {
+        listModels += noteModels
+        listModels = listModels.uniqueElements()
+    }
+
 
     private func deSelect() {
         for (index, var object) in listModels.enumerated() where object.isSelected {
@@ -247,4 +260,76 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
+}
+
+class Worker {
+    let session: URLSession
+    weak var workerDelegate: WorkerDelegate?
+
+    func fetch() {
+        var listModels: [NoteModel] = []
+        session.dataTask(with: createURLComponents()!) {data, response, _ in
+            guard let data = data,
+                  let response = try? JSONDecoder().decode(BackEndNoteModels.self, from: data)
+            else { return }
+            _ = String(data: data, encoding: .utf8)
+            for object in response {
+                listModels.append(NoteModel(
+                    headerText: object.header,
+                    mainText: object.text,
+                    date: object.date as? String ?? ""
+                    )
+                )
+            }
+            self.workerDelegate?.getListModels(noteModels: listModels)
+        }.resume()
+    }
+
+    init(
+        session: URLSession = URLSession(configuration: .default)
+    ) {
+        self.session = session
+    }
+
+    private func createURLComponents() -> URL? {
+        var urlComponents = URLComponents()
+
+        urlComponents.scheme = "https"
+        urlComponents.host = "firebasestorage.googleapis.com"
+        urlComponents.path = "/v0/b/ios-test-ce687.appspot.com/o/Empty.json"
+        urlComponents.queryItems = [
+            URLQueryItem(name: "alt", value: "media"),
+            URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
+        ]
+        print(urlComponents.url!)
+        print(123)
+        return urlComponents.url!
+    }
+
+    private func createURLRequest() -> URLRequest {
+        var request = URLRequest(url: createURLComponents()!)
+        request.httpMethod = "GET"
+        return request
+    }
+}
+
+struct BackEndNoteModel: Decodable {
+    let header, text: String
+    let date: Int
+}
+
+typealias BackEndNoteModels = [BackEndNoteModel]
+
+extension Array where Element: Hashable {
+  func uniqueElements() -> [Element] {
+    var seen = Set<Element>()
+
+    return self.compactMap { element in
+      guard !seen.contains(element)
+        else { return nil }
+
+      seen.insert(element)
+      return element
+    }
+  }
 }
