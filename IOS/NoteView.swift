@@ -8,20 +8,22 @@
 import Foundation
 import UIKit
 
-class NoteView: UIView {
+class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
+    weak var elementDelegate: ElementDelegate?
     private var headerText = UITextField()
-    private var datePicker = UIDatePicker()
-    private var dateField = UITextField()
+    private var scrollView = UIScrollView()
+    private var date = UILabel()
     private var mainText = UITextView()
     private var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "Дата: dd MMMM yyyy"
+        formatter.dateFormat = "MM.dd.yyyy eeee HH:mm"
         return formatter
     }()
-    var model: NoteModel = NoteModel(headerText: "", date: "") {
+    private var time = NSDate()
+    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
         didSet {
             headerText.text = model.headerText
-            dateField.text = model.date
+            date.text = model.date
             mainText.text = model.mainText
         }
     }
@@ -29,8 +31,22 @@ class NoteView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .systemBackground
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(
+                                       self,
+                                       selector: #selector(adjustForKeyboard),
+                                       name: UIResponder.keyboardWillHideNotification,
+                                       object: nil
+                                      )
+        notificationCenter.addObserver(
+                                        self,
+                                        selector: #selector(adjustForKeyboard),
+                                        name: UIResponder.keyboardWillChangeFrameNotification,
+                                        object: nil
+                                       )
+        setupScroll()
+        setupDate()
         setupHeaderText()
-        setupDateField()
         setupMainText()
         mainText.becomeFirstResponder()
     }
@@ -39,72 +55,97 @@ class NoteView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupDateField() {
-        dateField.translatesAutoresizingMaskIntoConstraints = false
-        dateField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        setupDatePicker()
-        updateDateField()
-        dateField.inputView = datePicker
-        datePicker.addTarget(self, action: #selector(updateDateField), for: .valueChanged)
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                as? NSValue else { return }
 
-        if model.date.isEmpty {
-            dateField.text = formatter.string(from: datePicker.date)
-            updateDateField()
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = convert(keyboardScreenEndFrame, from: window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            mainText.contentInset = .zero
         } else {
-            dateField.text = model.date
+            mainText.contentInset = UIEdgeInsets(
+                                                top: 0,
+                                                left: 0,
+                                                bottom: keyboardViewEndFrame.height - safeAreaInsets.bottom,
+                                                right: 0
+                                                )
         }
 
-        addSubview(dateField)
-        dateField.topAnchor.constraint(equalTo: headerText.bottomAnchor).isActive = true
-        dateField.leadingAnchor.constraint(
+        mainText.scrollIndicatorInsets = mainText.contentInset
+
+        let selectedRange = mainText.selectedRange
+        mainText.scrollRangeToVisible(selectedRange)
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        updateModel()
+        elementDelegate?.updateElementView(noteModel: model)
+    }
+
+    func updateModel() {
+        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
+    }
+
+    private func setupDate() {
+        date.translatesAutoresizingMaskIntoConstraints = false
+        date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        date.textColor = .gray
+        date.textAlignment = .center
+        model.date = formatter.string(from: time as Date)
+        scrollView.addSubview(date)
+        date.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        date.leadingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.leadingAnchor
         ).isActive = true
-        dateField.trailingAnchor.constraint(
+        date.trailingAnchor.constraint(
             equalTo: self.safeAreaLayoutGuide.trailingAnchor
         ).isActive = true
     }
-
-    private func setupDatePicker() {
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .wheels
-    }
-
-    @objc private func updateDateField() {
-        dateField.text = formatter.string(from: datePicker.date)
+    private func setupScroll() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(scrollView)
+        scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(
+            equalTo: safeAreaLayoutGuide.leadingAnchor
+        ).isActive = true
+        scrollView.trailingAnchor.constraint(
+            equalTo: safeAreaLayoutGuide.trailingAnchor
+        ).isActive = true
+        scrollView.bottomAnchor.constraint(
+            equalTo: safeAreaLayoutGuide.bottomAnchor
+        ).isActive = true
     }
 
     private func setupMainText() {
         mainText.translatesAutoresizingMaskIntoConstraints = false
         mainText.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        addSubview(mainText)
-        mainText.topAnchor.constraint(equalTo: dateField.bottomAnchor).isActive = true
-        mainText.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        mainText.delegate = self
+
+        scrollView.addSubview(mainText)
+        mainText.topAnchor.constraint(equalTo: headerText.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        mainText.bottomAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.bottomAnchor).isActive = true
         mainText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor
+            equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         mainText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
-    }
-
-    func updateModel() {
-        self.model.headerText = headerText.text ?? ""
-        self.model.date = dateField.text ?? ""
-        self.model.mainText = mainText.text
     }
 
     private func setupHeaderText() {
         headerText.translatesAutoresizingMaskIntoConstraints = false
-        headerText.placeholder = "Заметка"
+        headerText.placeholder = "Введите название"
         headerText.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        addSubview(headerText)
-        headerText.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        headerText.addTarget(self, action: #selector(textViewDidChange), for: UIControl.Event.editingChanged)
+        scrollView.addSubview(headerText)
+        headerText.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 20).isActive = true
         headerText.leadingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.leadingAnchor
+            equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor, constant: 20
         ).isActive = true
         headerText.trailingAnchor.constraint(
-            equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
     }
 }
