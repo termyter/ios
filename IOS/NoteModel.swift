@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NoteModel: Codable {
+struct NoteModel: Codable, Hashable {
     var headerText: String
     var mainText: String?
     var date: String
