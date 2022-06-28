@@ -9,7 +9,16 @@ import Foundation
 import UIKit
 
 class CustomCell: UITableViewCell {
-    var cellView = ElementList()
+    private var cellView = ElementList()
+    private var selectedButton = UIButton(type: .custom)
+    var model: NoteModel? {
+        get {
+            cellView.model
+        }
+        set {
+            cellView.model = newValue ?? NoteModel.empty
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,13 +28,17 @@ class CustomCell: UITableViewCell {
         layer.shadowRadius = 14
     }
 
+    func changeModeEnding(_ isEnding: Bool) {
+        cellView.isEditing = isEnding
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         isHidden = false
         isSelected = false
         isHighlighted = false
 
-        cellView.model = NoteModel(headerText: "", mainText: "", date: "")
+        cellView.model = NoteModel.empty
     }
 
     required init?(coder: NSCoder) {
@@ -47,3 +60,4 @@ class CustomCell: UITableViewCell {
         cellView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -4).isActive = true
     }
 }
+

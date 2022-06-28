@@ -20,7 +20,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         return formatter
     }()
     private var time = Date()
-    var model: NoteModel = NoteModel(headerText: "", mainText: "", date: "") {
+    var model: NoteModel = NoteModel.empty {
         didSet {
             headerText.text = model.headerText
             date.text = model.date
@@ -33,17 +33,17 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         self.backgroundColor = .systemBackground
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(
-                                       self,
-                                       selector: #selector(adjustForKeyboard),
-                                       name: UIResponder.keyboardWillHideNotification,
-                                       object: nil
-                                      )
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
         notificationCenter.addObserver(
-                                        self,
-                                        selector: #selector(adjustForKeyboard),
-                                        name: UIResponder.keyboardWillChangeFrameNotification,
-                                        object: nil
-                                       )
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardWillChangeFrameNotification,
+            object: nil
+        )
         setupScroll()
         setupDate()
         setupHeaderText()
@@ -66,11 +66,11 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
             mainText.contentInset = .zero
         } else {
             mainText.contentInset = UIEdgeInsets(
-                                                top: 0,
-                                                left: 0,
-                                                bottom: keyboardViewEndFrame.height - safeAreaInsets.bottom,
-                                                right: 0
-                                                )
+                top: 0,
+                left: 0,
+                bottom: keyboardViewEndFrame.height - safeAreaInsets.bottom,
+                right: 0
+            )
         }
 
         mainText.scrollIndicatorInsets = mainText.contentInset

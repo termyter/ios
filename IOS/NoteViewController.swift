@@ -29,17 +29,17 @@ final class NoteViewController: UIViewController, NoteDelegate {
         navigationItem.title = "Заметка"
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(
-                                       self,
-                                       selector: #selector(adjustForKeyboard),
-                                       name: UIResponder.keyboardWillHideNotification,
-                                       object: nil
-                                      )
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
         notificationCenter.addObserver(
-                                        self,
-                                        selector: #selector(adjustForKeyboard),
-                                        name: UIResponder.keyboardWillChangeFrameNotification,
-                                        object: nil
-                                       )
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardWillChangeFrameNotification,
+            object: nil
+        )
         noteView.noteDelegate = self
         setupRightBarButton()
         noteView.translatesAutoresizingMaskIntoConstraints = false
