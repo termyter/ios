@@ -1,18 +1,14 @@
 //
-//  ElementList.swift
+//  NoteView.swift
 //  IOS
 //
-//  Created by termyter on 13.04.2022.
+//  Created by termyter on 07.04.2022.
 //
 
 import Foundation
 import UIKit
 
-protocol ElementDelegate: AnyObject {
-    func updateElementView(noteModel: NoteModel)
-}
-
-class ElementList: UIView, ElementDelegate {
+class ElementList: UIView {
     private var headerText = UILabel()
     private var mainText = UILabel()
     private var date = UILabel()
@@ -31,10 +27,6 @@ class ElementList: UIView, ElementDelegate {
         setupMainText()
         setupDate()
         layer.cornerRadius = 14
-    }
-
-    func updateElementView(noteModel: NoteModel) {
-        model = noteModel
     }
 
     required init?(coder: NSCoder) {

@@ -4,49 +4,73 @@
 //
 //  Created by termyter on 13.04.2022.
 //
+
 import UIKit
 
 protocol ListDelegate: AnyObject {
-    func update(noteModel: NoteModel)
+    func createCell(noteModel: NoteModel)
 }
 
-class ListViewController: UIViewController, ListDelegate {
-    private let stackView = UIStackView()
-    private let scrollView = UIScrollView()
-    private let rightBarButton = UIBarButtonItem()
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListDelegate {
+    private var listModels: [NoteModel] {
+        get {
+            if let date = UserDefaults.standard.value(forKey: "listModels") as? Data {
+                let list = try? PropertyListDecoder().decode(Array<NoteModel>.self, from: date)
+                return list ?? []
+            } else {
+                return []
+            }
+        }
+        set {
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: "listModels")
+            UserDefaults.standard.synchronize()
+        }
+    }
     private let addButton = UIButton()
+    private var table = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
-        navigationItem.title = "Заметки"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        setupScrollView()
-        setupStackView()
+        table.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        navigationItem.title = "Заметка"
+        table.register(CustomCell.self, forCellReuseIdentifier: "Cell")
+        table.delegate = self
+        table.dataSource = self
+        setupUI()
         setupAddButton()
     }
 
-    func update(noteModel: NoteModel) {
-        let element = ElementList()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleOneTap))
-        element.addGestureRecognizer(tap)
-        element.model = noteModel
-        stackView.addArrangedSubview(element)
+    func createCell(noteModel: NoteModel) {
+        listModels.append(noteModel)
+        table.reloadData()
     }
 
-    @objc func handleOneTap(_ sender: UITapGestureRecognizer) {
-        if let item = sender.view as? ElementList {
-            let newNote = NoteViewController()
-            newNote.applyModel(model: item.model)
-            newNote.elementDelegate = item
-            self.navigationController?.pushViewController(newNote, animated: true)
-        } else {
-            print("не ElementList") }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        listModels.count
     }
 
-    @objc private func didAddButtonTap(_ sender: Any) {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? CustomCell else {
+            fatalError("не CustomCell")
+        }
+        cell.cellView.model = listModels[indexPath.row]
+        cell.layer.cornerRadius = 14
+        cell.layer.shadowRadius = 14
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let model = listModels[indexPath.row]
+
         let newNote = NoteViewController()
-        newNote.listDelegate = self
+        newNote.applyModel(model: model)
+        newNote.completion = { [weak self] noteModel in
+            self?.listModels[indexPath.row] = noteModel
+            self?.table.reloadData()
+        }
         self.navigationController?.pushViewController(newNote, animated: true)
     }
 
@@ -56,39 +80,24 @@ class ListViewController: UIViewController, ListDelegate {
         addButton.addTarget(self, action: #selector(didAddButtonTap(_:)), for: .touchUpInside)
         view.addSubview(addButton)
 
-        addButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -19).isActive = true
-        addButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -19).isActive = true
+        addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
     }
 
-    private func setupScrollView() {
-        view.addSubview(scrollView)
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        scrollView.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor
-        ).isActive = true
-        scrollView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor
-        ).isActive = true
-        scrollView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor
-        ).isActive = true
+    @objc private func didAddButtonTap(_ sender: Any) {
+        let newNote = NoteViewController()
+        newNote.listDelegate = self
+        self.navigationController?.pushViewController(newNote, animated: true)
     }
 
-    private func setupStackView() {
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.spacing = 4
-        scrollView.addSubview(stackView)
+    private func setupUI() {
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.separatorStyle = .none
+        view.addSubview(table)
 
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 10, trailing: 16)
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
