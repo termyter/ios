@@ -57,7 +57,7 @@ final class NoteViewController: UIViewController, NoteDelegate {
     }
 
     @objc func adjustForKeyboard(notification: Notification) {
-        if notification.name == UIResponder.keyboardWillHideNotification {
+        if notification.name != UIResponder.keyboardWillHideNotification {
             setupRightBarButton()
         } else {
             self.navigationItem.setRightBarButton(nil, animated: true)

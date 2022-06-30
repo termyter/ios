@@ -14,8 +14,11 @@ class ElementList: UIView {
     private var date = UILabel()
     var model: NoteModel = NoteModel.empty {
         didSet {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yy"
+            dateFormatter.string(from: model.date)
             headerText.text = model.headerText
-            date.text = model.date
+            date.text = dateFormatter.string(from: model.date)
             mainText.text = model.mainText
             if model.isSelected {
                 selectedButton.setImage(UIImage(named: "selected"), for: .normal)

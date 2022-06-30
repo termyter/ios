@@ -60,4 +60,3 @@ class CustomCell: UITableViewCell {
         cellView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -4).isActive = true
     }
 }
-

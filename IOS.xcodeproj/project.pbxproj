@@ -17,6 +17,8 @@
 		FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C635C27F62A32008FCD68 /* NoteViewController.swift */; };
 		FF5C636227F62A33008FCD68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF5C636127F62A33008FCD68 /* Assets.xcassets */; };
 		FF5C636527F62A33008FCD68 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF5C636327F62A33008FCD68 /* LaunchScreen.storyboard */; };
+		FFA4DF3B2840FE9200DD63F9 /* BackEndNoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA4DF3A2840FE9200DD63F9 /* BackEndNoteModel.swift */; };
+		FFA4DF3D2840FED300DD63F9 /* WorkerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA4DF3C2840FED300DD63F9 /* WorkerClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		FF5C636127F62A33008FCD68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF5C636427F62A33008FCD68 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF5C636627F62A33008FCD68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFA4DF3A2840FE9200DD63F9 /* BackEndNoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackEndNoteModel.swift; sourceTree = "<group>"; };
+		FFA4DF3C2840FED300DD63F9 /* WorkerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,12 +68,10 @@
 		FF5C635727F62A32008FCD68 /* IOS */ = {
 			isa = PBXGroup;
 			children = (
-				FF16E65F2806D06000AF162F /* ListViewController.swift */,
-				FF16E6632806D9A400AF162F /* ElementList.swift */,
-				FF5C635C27F62A32008FCD68 /* NoteViewController.swift */,
-				FF0E0FC527FF149D0017660F /* NoteView.swift */,
-				FF0E0FC727FF14C80017660F /* NoteModel.swift */,
-				FF27BCA92816B1A2003EAC18 /* CustomCell.swift */,
+				FFA4DF3E2840FF3400DD63F9 /* Controller */,
+				FFA4DF3F2840FF4900DD63F9 /* View */,
+				FFA4DF402840FF7700DD63F9 /* Model */,
+				FFA4DF3C2840FED300DD63F9 /* WorkerClass.swift */,
 				FF5C635827F62A32008FCD68 /* AppDelegate.swift */,
 				FF5C635A27F62A32008FCD68 /* SceneDelegate.swift */,
 				FF5C636127F62A33008FCD68 /* Assets.xcassets */,
@@ -77,6 +79,34 @@
 				FF5C636627F62A33008FCD68 /* Info.plist */,
 			);
 			path = IOS;
+			sourceTree = "<group>";
+		};
+		FFA4DF3E2840FF3400DD63F9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FF5C635C27F62A32008FCD68 /* NoteViewController.swift */,
+				FF16E65F2806D06000AF162F /* ListViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FFA4DF3F2840FF4900DD63F9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FF0E0FC527FF149D0017660F /* NoteView.swift */,
+				FF27BCA92816B1A2003EAC18 /* CustomCell.swift */,
+				FF16E6632806D9A400AF162F /* ElementList.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FFA4DF402840FF7700DD63F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FF0E0FC727FF14C80017660F /* NoteModel.swift */,
+				FFA4DF3A2840FE9200DD63F9 /* BackEndNoteModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +203,8 @@
 			files = (
 				FF0E0FC827FF14C80017660F /* NoteModel.swift in Sources */,
 				FF5C635D27F62A32008FCD68 /* NoteViewController.swift in Sources */,
+				FFA4DF3D2840FED300DD63F9 /* WorkerClass.swift in Sources */,
+				FFA4DF3B2840FE9200DD63F9 /* BackEndNoteModel.swift in Sources */,
 				FF16E6602806D06000AF162F /* ListViewController.swift in Sources */,
 				FF5C635927F62A32008FCD68 /* AppDelegate.swift in Sources */,
 				FF0E0FC627FF149D0017660F /* NoteView.swift in Sources */,

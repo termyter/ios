@@ -10,10 +10,10 @@ import Foundation
 struct NoteModel: Codable, Hashable {
     var headerText: String
     var mainText: String?
-    var date: String
+    var date: Date
     var isSelected: Bool = false
     var isEmpty: Bool {
         return self.headerText.isEmpty
     }
-    static let empty = NoteModel(headerText: "", mainText: "", date: "", isSelected: false)
+    static let empty = NoteModel(headerText: "", mainText: "", date: Date(), isSelected: false)
 }

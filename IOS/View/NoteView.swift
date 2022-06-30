@@ -23,7 +23,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     var model: NoteModel = NoteModel.empty {
         didSet {
             headerText.text = model.headerText
-            date.text = model.date
+            date.text = formatter.string(from: model.date)
             mainText.text = model.mainText
         }
     }
@@ -84,7 +84,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
     }
 
     func updateModel() {
-        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: date.text ?? "")
+        model = NoteModel(headerText: headerText.text ?? "", mainText: mainText.text, date: Date.now)
     }
 
     private func setupDate() {
@@ -92,7 +92,7 @@ class NoteView: UIView, UITextViewDelegate, UITextFieldDelegate {
         date.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         date.textColor = .gray
         date.textAlignment = .center
-        model.date = formatter.string(from: time)
+        model.date = time
         scrollView.addSubview(date)
         date.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
         date.leadingAnchor.constraint(
